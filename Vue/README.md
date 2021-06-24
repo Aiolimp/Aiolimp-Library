@@ -2,11 +2,6 @@ Vue
 ===
 
 
-## <a name="chapter-one" id="chapter-one"></a>一 目录
-
-
-## <a name="chapter-two" id="chapter-two"></a>一 前言
-
 学习使用Vue已经差不多一年了，在这里对Vue的学习过程和自己的理解进行整理，以作参考。
 
 
@@ -45,6 +40,7 @@ Vue
 ### 优化
 
 * [ ] [Vue 项目性能优化 — 实践指南（网上最全 / 详细）](https://juejin.cn/post/6844903913410314247)
+* [ ] [揭秘 Vue.js 九个性能优化技巧](https://juejin.cn/post/6922641008106668045)
 
 
 ### Vue3.0

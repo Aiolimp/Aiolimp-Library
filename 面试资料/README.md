@@ -1,31 +1,12 @@
-Vue
+面试资料总汇
 ===
+整理下面试资料，也是个自身学习的过程。
 
 
-## <a name="chapter-one" id="chapter-one"></a>一 目录
 
+### 掘金优秀文章
 
-## <a name="chapter-two" id="chapter-two"></a>一 前言
-
-学习使用Vue已经差不多一年了，在这里对Vue的学习过程和自己的理解进行整理，以作参考。
-
-
-* [ ] MVVM
-* [ ] 生命周期
-* [ ] 数据绑定
-* [ ] 状态管理
-* [ ] 组件通信
-* [ ] computed/watch 原理
-* [ ] Virtual DOM
-* [ ] diff
-* [ ] React Hook
-* [ ] React Hoc/Vue mixin
-* [ ] Vue 和 React 有什么不同
-* [ ] ...
-
-### Vue开发技巧
-
-* [ ] [Vue 开发必须知道的 36 个技巧](https://juejin.cn/post/6844903959266590728)
+* [ ] [让我在面试官面前结巴的24个XX和XX的区别！](https://juejin.cn/post/6956360277185003556)
 * [ ] [「面试题」20+Vue面试题整理](https://juejin.im/post/6844904084374290446)
 * [ ] [记录面试中一些回答不够好的题（Vue 居多） | 掘金技术征文](https://juejin.im/post/6844903569422811150)
   
