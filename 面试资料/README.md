@@ -10,9 +10,9 @@
 * [ ] [「面试题」20+Vue面试题整理](https://juejin.im/post/6844904084374290446)
 * [ ] [记录面试中一些回答不够好的题（Vue 居多） | 掘金技术征文](https://juejin.im/post/6844903569422811150)
   
-### MVVM
+### ECMAScript
 
-* [ ] [50行代码的MVVM，感受闭包的艺术](https://juejin.im/post/5b1fa77451882513ea5cc2ca)
+* [ ] [通过 20 个棘手的ES6面试问题来提高咱们的 JS 技能](https://juejin.cn/post/6844903991550181390)
 * [ ] [不好意思！耽误你的十分钟，让MVVM原理还给你](https://juejin.im/post/5abdd6f6f265da23793c4458)
 * [ ] [基于Vue实现一个简易MVVM](https://juejin.im/post/5cd8a7c1f265da037a3d0992)
 * [ ] [剖析Vue实现原理 - 如何实现双向绑定mvvm](https://github.com/DMQ/mvvm)
