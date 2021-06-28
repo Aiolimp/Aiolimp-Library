@@ -325,8 +325,9 @@ export default {
         }
     }
 }
-复制代码
-App.vue
+```
+`App.vue`:
+```javascript
 <template>
     <div>
         <my-item v-for="(item, index) in list" @custom-event="customEvent(index, $event)">
