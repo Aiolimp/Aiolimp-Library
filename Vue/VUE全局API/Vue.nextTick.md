@@ -17,7 +17,17 @@
   // DOM 还没有更新
   Vue.nextTick(function () {
     // DOM 更新了
-  })
+  })- [Vue.nextTick](#vuenexttick)
+  - [官方文档](#官方文档)
+  - [异步更新队列](#异步更新队列)
+- [Vue.nextTick](#vuenexttick)
+  - [官方文档](#官方文档)
+  - [异步更新队列](#异步更新队列)
+- [Javascript EventLoop](#javascript-eventloop)
+  - [为什么JavaScript是单线程？](#为什么javascript是单线程)
+  - [任务队列](#任务队列)
+- [从event loop看vue的nextTick](#从event-loop看vue的nexttick)
+- [应用场景](#应用场景)
   
   // 作为一个 Promise 使用 (2.1.0 起新增，详见接下来的提示)
   Vue.nextTick()
@@ -72,7 +82,7 @@ var vm = new Vue({
 
 
 
-```xml
+```js
     <div id="example">
         {{ msg }}
     </div>
@@ -80,7 +90,7 @@ var vm = new Vue({
 
 
 
-```php
+```js
 var vm = new Vue({
     el: '#example',
     data: {

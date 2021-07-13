@@ -24,7 +24,16 @@
     template: '<p>{{firstName}} {{lastName}} aka {{alias}}</p>',
     data: function () {
       return {
-        firstName: 'Walter',
+        firstName: 'Walter',- [官方文档](#官方文档)
+  - [Vue.extend( options )](#vueextend-options-)
+- [官方文档](#官方文档)
+  - [Vue.extend( options )](#vueextend-options-)
+- [为什么使用 extend](#为什么使用-extend)
+- [简单示例](#简单示例)
+- [实现alert方法](#实现alert方法)
+        - [main.vue](#mainvue)
+        - [index.js](#indexjs)
+      - [使用](#使用)
         lastName: 'White',
         alias: 'Heisenberg'
       }
