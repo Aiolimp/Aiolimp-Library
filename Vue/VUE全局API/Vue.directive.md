@@ -1,5 +1,17 @@
+## Vue.directive
 
-
+- [Vue.directive](#vuedirective)
+  - [官方文档](#官方文档)
+  - [自定义指令](#自定义指令)
+  - [8个非常实用的Vue自定义指令](#8个非常实用的vue自定义指令)
+    - [v-copy](#v-copy)
+    - [v-longpress](#v-longpress)
+    - [v-debounce](#v-debounce)
+    - [v-emoji](#v-emoji)
+    - [v-LazyLoad](#v-lazyload)
+    - [v-permission](#v-permission)
+    - [vue-waterMarker](#vue-watermarker)
+    - [v-draggable](#v-draggable)
 ### 官方文档
 
  [Vue.directive( id, [definition\] )](https://cn.vuejs.org/v2/api/#Vue-directive)
@@ -12,17 +24,7 @@
 - **用法**：
 
   注册或获取全局指令。
-- [官方文档](#官方文档)
-- [自定义指令](#自定义指令)
-- [8个非常实用的Vue自定义指令](#8个非常实用的vue自定义指令)
-  - [v-copy](#v-copy)
-  - [v-longpress](#v-longpress)
-  - [v-debounce](#v-debounce)
-  - [v-emoji](#v-emoji)
-  - [v-LazyLoad](#v-lazyload)
-  - [v-permission](#v-permission)
-  - [vue-waterMarker](#vue-watermarker)
-  - [v-draggable](#v-draggable)
+
   ```js
   // 注册
   Vue.directive('my-directive', {

@@ -1,3 +1,15 @@
+## Vue.extend
+
+- [Vue.extend](#vueextend)
+- [官方文档](#官方文档)
+  - [Vue.extend( options )](#vueextend-options-)
+- [为什么使用 extend](#为什么使用-extend)
+- [简单示例](#简单示例)
+- [实现 alert 方法](#实现-alert-方法)
+        - [main.vue](#mainvue)
+        - [index.js](#indexjs)
+      - [使用](#使用)
+
 ## 官方文档
 
 > 学习开始之前我们先来看一下官方文档是怎么描述的。
@@ -26,14 +38,7 @@
       return {
         firstName: 'Walter',- [官方文档](#官方文档)
   - [Vue.extend( options )](#vueextend-options-)
-- [官方文档](#官方文档)
-  - [Vue.extend( options )](#vueextend-options-)
-- [为什么使用 extend](#为什么使用-extend)
-- [简单示例](#简单示例)
-- [实现alert方法](#实现alert方法)
-        - [main.vue](#mainvue)
-        - [index.js](#indexjs)
-      - [使用](#使用)
+
         lastName: 'White',
         alias: 'Heisenberg'
       }
@@ -67,22 +72,22 @@
 我们照着官方文档来创建一个示例：
 
 ```js
-import Vue from 'vue'
+import Vue from "vue";
 
 const testComponent = Vue.extend({
-  template: '<div>{{ text }}</div>',
+  template: "<div>{{ text }}</div>",
   data: function () {
     return {
-      text: 'extend test'
-    }
-  }
-})
+      text: "extend test",
+    };
+  },
+});
 ```
 
 然后我们将它手动渲染：
 
 ```js
-const extendComponent = new testComponent().$mount()
+const extendComponent = new testComponent().$mount();
 ```
 
 这时候，我们就将组件渲染挂载到 `body` 节点上了。
@@ -90,14 +95,14 @@ const extendComponent = new testComponent().$mount()
 我们可以通过 `$el` 属性来访问 `extendComponent` 组件实例：
 
 ```js
-document.body.appendChild(extendComponent.$el)
+document.body.appendChild(extendComponent.$el);
 ```
 
 如果想深入掌握 extend 知识，不妨做一个 alert 组件来实现类似于原生的全局调用。
 
-## 实现alert方法
+## 实现 alert 方法
 
-我们需要新建一个目录，目录中有俩个文件index.js和main.vue
+我们需要新建一个目录，目录中有俩个文件 index.js 和 main.vue
 
 ###### main.vue
 
@@ -119,7 +124,7 @@ document.body.appendChild(extendComponent.$el)
     methods:{
       close(){
         setTimeout(()=>{
-          this.$emit("results","test"); // 自定义方法         
+          this.$emit("results","test"); // 自定义方法
           this.visible = false; // 隐藏元素
           this.$el.remove(); // 移除DOM
         },2000)
@@ -135,21 +140,23 @@ document.body.appendChild(extendComponent.$el)
 ###### index.js
 
 ```jsx
-import Vue from 'vue';
-import main from './main.vue';
+import Vue from "vue";
+import main from "./main.vue";
 let MyAlertConstructor = Vue.extend(main);
 let instance;
-var MyAlert=function(message){ //自定义传入的参数
+var MyAlert = function (message) {
+  //自定义传入的参数
   // 创建实例并且过滤参数
-  instance= new MyAlertConstructor({
-    data:{
-      message:message
-    }})
+  instance = new MyAlertConstructor({
+    data: {
+      message: message,
+    },
+  });
   // 挂载实例
   instance.$mount();
-  document.body.appendChild(instance.$el)
+  document.body.appendChild(instance.$el);
   return instance;
-}
+};
 export default MyAlert;
 ```
 
@@ -160,4 +167,3 @@ import Hint from '../brick/Hint/index.js'
 Hint({name : 'name'}).$on('results', (text) => {
         console.log(text);
 ```
-
