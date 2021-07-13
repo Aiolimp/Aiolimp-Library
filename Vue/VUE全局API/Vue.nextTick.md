@@ -387,4 +387,5 @@ nextTick函数其实做了两件事情，一是生成两个timerFunc，把回调
 - [JavaScript 运行机制详解：再谈Event Loop](http://www.ruanyifeng.com/blog/2014/10/event-loop.html)
 - [从event loop看vue的nextTick](https://juejin.im/post/59b499e86fb9a00a4e677825)
 - [Vue.js异步更新DOM策略及nextTick](https://github.com/answershuto/learnVue/blob/master/docs/Vue.js%E5%BC%82%E6%AD%A5%E6%9B%B4%E6%96%B0DOM%E7%AD%96%E7%95%A5%E5%8F%8AnextTick.MarkDown)
+- [全面解析Vue.nextTick实现原理](https://mp.weixin.qq.com/s?__biz=Mzg4MTYwMzY1Mw==&mid=2247495702&idx=1&sn=757a0817674daedb86fb9eb34c657a2d&source=41#wechat_redirect)
 
