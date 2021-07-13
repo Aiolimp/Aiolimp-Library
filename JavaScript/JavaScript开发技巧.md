@@ -1,5 +1,6 @@
 JavaScript代码技巧
 ===
+
 - [JavaScript代码技巧](#javascript代码技巧)
       - [1.随机获取布尔值](#1随机获取布尔值)
       - [2.获取数组中的唯一值(数组去重)](#2获取数组中的唯一值数组去重)
@@ -21,6 +22,7 @@ JavaScript代码技巧
 此函数将使用`Math.random()`方法返回布尔值（真或假）。
 `Math.random`创建一个介于0和1之间的随机数，然后我们检查它是否大于或小于0.5。
 这意味着有50/50的机会会得到对或错。
+
 
 ```javascript
 const getRandomBoolean = () => Math.random() >= 0.5;
