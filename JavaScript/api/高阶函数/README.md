@@ -32,7 +32,8 @@ console.log(newNums);//[7, 10, 13]
 
 当然，后面的参数都是可选的 ，不用的话可以省略。
 
-[**JavaScript中 Map Set详解**](https://github.com/Aiolimp/Aiolimp-Library/blob/main/JavaScript/%E5%87%BD%E6%95%B0/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0/JavaScript%E4%B8%AD%20Map%20Set%E8%AF%A6%E8%A7%A3.md)
+[**JavaScript中 Map Set详解**](https://github.com/Aiolimp/Aiolimp-Library/blob/main/JavaScript/api/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0/JavaScript%E4%B8%AD%20Map%20Set%E8%AF%A6%E8%A7%A3.md)
+
 
 ### 2. reduce
 
