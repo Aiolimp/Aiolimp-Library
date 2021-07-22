@@ -453,3 +453,65 @@ console.log(person.age)// 23
 ```
 
 上面代码中，a和b指向同一个对象，然后a的值变为1，这时不会对b产生影响，b还是指向原来的那个对象。
+
+### 10.Symbol的使用
+
+- Symbol是一种基本类型，由Symbol函数生成
+
+```js
+// 没有参数的情况
+var s1 = Symbol();
+var s2 = Symbol();
+s1 === s2 // false
+// 有参数的情况
+var s1 = Symbol("foo");
+var s2 = Symbol("foo");
+s1 === s2 // false
+a.mySymbol = 'hello'  // 错误
+```
+
+- 不能new，会报错，返回一个值，不是对象
+- Symbol 函数可以接受一个字符串作为参数
+- instanceof 的结果为 false
+
+```js
+var s = Symbol('foo');
+console.log(s instanceof Symbol); // false
+```
+
+- Symbol 值可以作为标识符，用于对象的属性名，可以保证不会出现同名的属性。
+
+```js
+var mySymbol = Symbol();
+
+// 第一种写法
+var a = {};
+a[mySymbol] = 'Hello!';
+
+// 第二种写法
+var a = {
+  [mySymbol]: 'Hello!'
+};
+
+// 第三种写法
+var a = {};
+Object.defineProperty(a, mySymbol, { value: 'Hello!' });
+
+// 以上写法都得到同样结果
+console.log(a[mySymbol]); // "Hello!"
+```
+
+- 该属性不会出现在 for…in、for…of 循环中，也不会被 Object.keys()、Object.getOwnPropertyNames()、JSON.stringify() 返回
+
+- 使用同一个 Symbol 值，可以使用 Symbol.for
+
+```js
+var s1 = Symbol.for('foo');
+var s2 = Symbol.for('foo');
+
+console.log(s1 === s2); // true
+```
+
+使用
+当需要区分形状，正方形，圆形，菱形 会使用 const shape = { triangle: ‘triangle’, circle: ‘circle’},不优雅，可以使用
+const shape = { triangle: Symbol(), circle: Symbol()},
