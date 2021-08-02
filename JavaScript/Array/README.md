@@ -70,8 +70,21 @@ console.log(arr); // [ 0,1,2,3,4,5,6,7,8,9 ]
 
 ```
 
-`slice(1, 5)` 可见里面最多含 4（`5 - 1`） 个元素，而且从第 1 位开始取。
+`slice(1, 5)` 可见里面最多含 4（`5 - 1`） 个元素，而且从第 1 
 
+slice()可以将伪数组转换为真数组：
+
+```js
+let array = Array.prototye.slice.call(arguments)
+///或者
+let array = [].call(arguments)
+//或者
+let array = Array.from(arguments)//ES6中的新API
+//ES6展开运算符
+let array = [...arguments]
+// 利用concat+apply
+let args = Array.prototype.concat.apply([], arguments);//apply方法会把第二个参数展开
+```
 ##### map
 
 创建一个新数组并返回，新数组的每个元素由原数组中的每一个元素执行提供的函数而来，其中原始数组不会发生改变。
