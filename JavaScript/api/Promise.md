@@ -1,5 +1,23 @@
 ## Promise
-
+- [Promise](#promise)
+  - [1.Promise的含义](#1promise的含义)
+    - [基本用法：](#基本用法)
+    - [特点：](#特点)
+    - [作用：解决地狱回调](#作用解决地狱回调)
+  - [2.Promise链式调用](#2promise链式调用)
+    - [简易版实现](#简易版实现)
+    - [设置回调数组](#设置回调数组)
+    - [链式调用完成](#链式调用完成)
+    - [**错误捕获及冒泡机制分析**](#错误捕获及冒泡机制分析)
+  - [3.实现Promise的 resolve、reject 和 finall](#3实现promise的-resolvereject-和-finall)
+    - [实现 Promise.resolve](#实现-promiseresolve)
+    - [实现 Promise.reject](#实现-promisereject)
+    - [实现 Promise.prototype.finally](#实现-promiseprototypefinally)
+  - [4.Promise.all()、Promise.race()、Promise.any()](#4promiseallpromiseracepromiseany)
+    - [Promise.all()](#promiseall)
+    - [Promise.race()](#promiserace)
+    - [Promise.any()](#promiseany)
+  
 ### 1.Promise的含义
 
 Promise 是异步编程的一种解决方案，从语法上说，Promise 是一个对象，从它可以获取异步操作的消息。Promise 提供统一的 API，各种异步操作都可以用同样的方法进行处理。
