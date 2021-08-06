@@ -4,7 +4,7 @@
 
 一个模块就是一个独立的文件。该文件内部的所有变量，外部无法获取。如果你希望外部能够读取模块内部的某个变量，就必须使用`export`关键字输出该变量。下面是一个 JS 文件，里面使用`export`命令输出变量。
 
-```
+```js
 // profile.js
 export var firstName = 'Michael';
 export var lastName = 'Jackson';
@@ -17,7 +17,7 @@ export var year = 1958;
 
 [![复制代码](https://common.cnblogs.com/images/copycode.gif)](javascript:void(0);)
 
-```
+```js
 // profile.js
 var firstName = 'Michael';
 var lastName = 'Jackson';
@@ -32,7 +32,7 @@ export {firstName, lastName, year};
 
 `export`命令除了输出变量，还可以输出函数或类（class）。
 
-```
+```js
 export function multiply(x, y) {
   return x * y;
 };
@@ -46,7 +46,7 @@ export function multiply(x, y) {
 
 如果想为输入的变量重新取一个名字，`import`命令要使用`as`关键字，将输入的变量重命名。
 
-```
+```js
 import { lastName as surname } from './profile.js';
 ```
 
@@ -58,7 +58,7 @@ import { lastName as surname } from './profile.js';
 
  
 
-```
+```js
 // export-default.js
 export default function () {
   console.log('foo');
@@ -71,7 +71,7 @@ export default function () {
 
 与export命令的区别：其他模块加载该模块时，`import`命令可以为该匿名函数指定任意名字。
 
-```
+```js
 // import-default.js
 import customName from './export-default';
 customName(); // 'foo'
@@ -83,7 +83,7 @@ customName(); // 'foo'
 
 [![复制代码](https://common.cnblogs.com/images/copycode.gif)](javascript:void(0);)
 
-```
+```js
 // modules.js
 function add(x, y) {
   return x * y;
