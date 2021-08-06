@@ -26,7 +26,7 @@ asyncFn();
 
 这样就表示这是异步函数，返回的结果
 
-   ![image-20210806164806809](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20210806164806809.png)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/bd1bf882248e4c748d2db0f4d99cc513.png)
 
 > async 表示函数里有异步操作
 >
@@ -44,7 +44,7 @@ asyncFn().then(result => {
 console.log('我先执行');
 ```
 
-![image-20210806164831612](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20210806164831612.png)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/d6e26fa50cef4b978f6fa3cb085c501d.png)
 
 上面的执行结果是先打印出`'我先执行'`，虽然是上面`asyncFn()`先执行，但是已经被定义异步函数了，不会影响后续函数的执行。
 
@@ -60,7 +60,7 @@ e().then(success => console.log('成功', success))
    .catch(error => console.log('失败', error));![img](https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2018/6/13/163f53f3b4a1f90d~tplv-t2oaga2asx-zoom-in-crop-mark:652:0:0:0.awebp)
 ```
 
-![image-20210806164914755](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20210806164914755.png)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/a877e2810a3445598a7f4e9fcfb2c9a8.png)
 
 我们看到函数内部抛出了一个`异常`，返回`reject`，`async`函数接收到之后，判定执行失败进入`catch`，该返回的错误打印了出来。
 
@@ -103,7 +103,7 @@ PromiseError().then(success => console.log('成功', success))
               .catch(error => console.log('失败', error));
 ```
 
-![image-20210806164936186](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20210806164936186.png)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/101c19d5dff04c7f8e3b88233c78ed33.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0Fpb2xpbXA=,size_16,color_FFFFFF,t_70)
 
 我们看到第二行多了个`Promise`对象打印，不用在意，这个是在`Chrome`控制台的默认行为，我们平常在控制台进行赋值也是同样的效果。如果最后`执行语句`或者`表达式`没有`return`返回值，默认`undefined`，做个小实验。
 
@@ -174,7 +174,7 @@ awaitReturn().then(success => console.log('成功', success))
              .catch(error => console.log('失败',error))
 ```
 
-![image-20210806164950209](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20210806164950209.png)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/f9a4f6da4c824e9f924c2d48b24eb1ef.png)
 
 在这个函数里，有一个`await`函数，async会等到`await 1` 这一步执行完了才会返回`promise`状态，毫无疑问，判定`resolved`。
 
@@ -282,7 +282,7 @@ async function start() {
 start();
 ```
 
-![image-20210806165140181](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20210806165140181.png)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/91056032f6264960979d37cd1a70bb47.png)
 
 返回reject后，后面的代码都没有执行了，以此迁出一个例子:
 
@@ -296,7 +296,7 @@ throwError().then(success => console.log('成功', last))
             .catch(error => console.log('失败',last))
 ```
 
-![image-20210806165153836](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20210806165153836.png)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/515f365c6a6b42a8ba28f09ee5ef9e78.png)
 
 其实`async`函数不难，难在错处理上。
 
@@ -320,7 +320,7 @@ throwError().then(success => console.log('成功', last))
             .catch(error => console.log('失败',last))
 ```
 
-![image-20210806165213556](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20210806165213556.png)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/8970ccb9b4104f8a83231bf1e92f881a.png)
 
 这样的话，就可以继续往下执行了。
 
@@ -362,7 +362,7 @@ console.log("===END===")
 
 执行结果
 
-![image-20210806165228724](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20210806165228724.png)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/a26527124b37419b93418c2a779f2086.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0Fpb2xpbXA=,size_16,color_FFFFFF,t_70)
 
 我们一步步来解析
 
@@ -420,7 +420,7 @@ console.log("===END===")
 
 执行结果
 
-![image-20210806165244116](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20210806165244116.png)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/db992cafdc8841f8a445ed5309d81f84.png)
 
 和上一个例子比较发现`promiseFn.then((val)=> console.log(val)); `先于`console.log(testFn1)` 执行。
 
