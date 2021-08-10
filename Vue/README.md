@@ -41,6 +41,7 @@ Vue
 
 * [ ] [Vue 项目性能优化 — 实践指南（网上最全 / 详细）](https://juejin.cn/post/6844903913410314247)
 * [ ] [揭秘 Vue.js 九个性能优化技巧](https://juejin.cn/post/6922641008106668045)
+* [ ]  [Vue 应用性能优化指南](https://juejin.cn/post/6844903677262561293#heading-1)
 
 
 ### Vue3.0
