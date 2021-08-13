@@ -86,7 +86,7 @@
     }
 ```
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/680cb75cbea949568bc3d42a1d7b92e2.png)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/26af81e681f84f8697407afaf96a3793.png)
 
 缺点：当文本过长，且包含过长英文时，会出现英文文本被隐藏的情况
 
