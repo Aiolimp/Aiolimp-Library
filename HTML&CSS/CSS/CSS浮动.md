@@ -4,7 +4,7 @@
 
 正常情况下当我们想得到下面这种布局时，通常想到的都是flex，如果通过浮动(float)实现会怎样呢？
 
-![image-20210813103701436](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20210813103701436.png)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/26af81e681f84f8697407afaf96a3793.png)
 
 ### 不清除浮动：
 
@@ -55,7 +55,7 @@
 
 ```
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/680cb75cbea949568bc3d42a1d7b92e2.png)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/26af81e681f84f8697407afaf96a3793.png)
 
 缺点：如果父级当前还有父级，那么爷爷就会受到影响造成高度坍塌，就会套娃无限循环下去。
 
@@ -71,7 +71,7 @@
     }
 ```
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/680cb75cbea949568bc3d42a1d7b92e2.png)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/26af81e681f84f8697407afaf96a3793.png)
 
 缺点：虽然效果可以实现但是`position:absolute`也会脱离文档流，影响整体布局。
 
@@ -111,7 +111,7 @@
       }
 ```
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/680cb75cbea949568bc3d42a1d7b92e2.png)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/26af81e681f84f8697407afaf96a3793.png)
 
 缺点：具有局限性，只有知道浮动元素的定宽，才能使用这种方法。
 
@@ -141,13 +141,13 @@
         }
 ```
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/680cb75cbea949568bc3d42a1d7b92e2.png)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/26af81e681f84f8697407afaf96a3793.png)
 
 缺点：增加了一个`div`标签，增加了页面的`渲染负担`。
 
 ### 6.给父级添加伪元素进行clear(最优解)
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/680cb75cbea949568bc3d42a1d7b92e2.png)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/26af81e681f84f8697407afaf96a3793.png)
 
 ```css
 .box::after {
