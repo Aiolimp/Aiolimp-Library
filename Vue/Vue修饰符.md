@@ -1,5 +1,22 @@
 ## vue修饰符
 
+- [vue修饰符](#vue修饰符)
+- [1.lazy](#1lazy)
+- [2.trim](#2trim)
+- [3.number](#3number)
+- [4.stop](#4stop)
+- [5.capture](#5capture)
+- [6.self](#6self)
+- [7.once](#7once)
+- [8.prevent](#8prevent)
+- [9.native](#9native)
+- [10.left，right，middle](#10leftrightmiddle)
+- [11.passive](#11passive)
+- [12.camel](#12camel)
+- [12.sync](#12sync)
+- [13.keyCode](#13keycode)
+
+
 ## 1.lazy
 
 `lazy`修饰符作用是，改变输入框的值时value不会改变，当光标离开输入框时，`v-model`绑定的值value才会改变
