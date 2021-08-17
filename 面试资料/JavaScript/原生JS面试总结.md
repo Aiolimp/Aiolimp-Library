@@ -8,16 +8,6 @@
 | --- |
 | [一 目录](#chapter-one) |
 | <a name="catalog-chapter-two" id="catalog-chapter-two"></a>[二 JS数据类型](#chapter-two) |
-| &emsp;[2.1 MVVM](#chapter-two-one) |
-| &emsp;[2.2 MVVM](#chapter-two-two) |
-| &emsp;[2.3 MVVM](#chapter-two-three) |
-| &emsp;[2.4 MVVM](#chapter-two-four) |
-| &emsp;[2.5 MVVM](#chapter-two-five) |
-| &emsp;[2.6 MVVM](#chapter-two-six) |
-| &emsp;[2.7 MVVM](#chapter-two-seven) |
-| &emsp;[2.8 MVVM](#chapter-two-eight) |
-| &emsp;[2.9 MVVM](#chapter-two-night) |
-| &emsp;[2.10 MVVM](#chapter-two-ten) |
 | <a name="catalog-chapter-three" id="catalog-chapter-three"></a>[二 谈谈你对闭包的理解](#chapter-three) |
 | <a name="catalog-chapter-four" id="catalog-chapter-four"></a>[三 谈谈你对原型、原型链的理解](#chapter-four) |
 | <a name="catalog-chapter-five" id="catalog-chapter-five"></a>[四 JS如何实现继承](#chapter-five) |
