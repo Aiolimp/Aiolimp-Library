@@ -1,5 +1,6 @@
 const { initMixin } = require('./init')
 
+
 function Vue(options) {
     // 初始化传进来的options配置
     this._init(options)
@@ -9,6 +10,7 @@ function Vue(options) {
 // 这么做有利于代码分割
 initMixin(Vue)
 // 实例一个Vue对象
+
 let vue = new Vue({
     props: {},
     data() {
