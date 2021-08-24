@@ -143,7 +143,6 @@ var person = {
 var name = 'Wiliam';
 var Hi = person.sayHi;
 Hi.call(person); //Hi.apply(person)
-复制代码
 ```
 
 输出的结果为: Hello, YvetteLau. 因为使用硬绑定明确将this绑定在了person上。
@@ -163,7 +162,6 @@ var Hi = function(fn) {
     fn();
 }
 Hi.call(person, person.sayHi); 
-复制代码
 ```
 
 输出的结果是 Hello, Wiliam. 原因很简单，Hi.call(person, person.sayHi)的确是将this绑定到Hi中的this了。但是在执行fn的时候，相当于直接调用了sayHi方法(记住: person.sayHi已经被赋值给fn了，隐式绑定也丢了)，没有指定this的值，对应的是默认绑定。
@@ -183,7 +181,6 @@ var Hi = function(fn) {
     fn.call(this);
 }
 Hi.call(person, person.sayHi);
-复制代码
 ```
 
 此时，输出的结果为: Hello, YvetteLau，因为person被绑定到Hi函数中的this上，fn又将这个对象绑定给了sayHi的函数。这时，sayHi中的this指向的就是person对象。
@@ -217,7 +214,6 @@ function _new() {
     //如果构造函数返回的不是一个对象，返回创建的新对象
     return target;
 }
-复制代码
 ```
 
 因此，我们使用new来调用函数的时候，就会新对象绑定到这个函数的this上。
@@ -229,7 +225,6 @@ function sayHi(name){
 }
 var Hi = new sayHi('Yevtte');
 console.log('Hello,', Hi.name);
-复制代码
 ```
 
 输出结果为 Hello, Yevtte, 原因是因为在var Hi = new sayHi('Yevtte');这一步，会将sayHi中的this绑定到Hi对象上。
@@ -294,7 +289,7 @@ bar.call(null); //Chirs
 
     };
 
-    a.func2()     // Cherry复制代码
+    a.func2()     // Cherry
 ```
 
 箭头函数注意事项：
@@ -330,7 +325,7 @@ bar.call(null); //Chirs
 
     };
 
-    a.func2()       // Cherry复制代码
+    a.func2()       // Cherry
 ```
 
 这个例子中，在 func2 中，首先设置 `var _this = this;`，这里的 `this` 是调用 `func2` 的对象 a，为了防止在 `func2` 中的 setTimeout 被 window 调用而导致的在 setTimeout 中的 this 为 window。我们将 `this(指向变量 a)` 赋值给一个变量 `_this`，这样，在 `func2` 中我们使用 `_this` 就是指向对象 a 了。
@@ -357,7 +352,7 @@ bar.call(null); //Chirs
 
     };
 
-    a.func2()            // Cherry复制代码
+    a.func2()            // Cherry
 ```
 
 ##### 使用 call
@@ -378,7 +373,7 @@ bar.call(null); //Chirs
 
     };
 
-    a.func2()            // Cherry复制代码
+    a.func2()            // Cherry
 ```
 
 ##### 使用 bind

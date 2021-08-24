@@ -346,21 +346,19 @@ RTT就是，一个数据包从发出去到回来的时间，即**数据包的一
 
 ```
 SRTT = (1 - α) * SRTT + α * RTT  //求 SRTT 的加权平均
-复制代码
 ```
 
 **2. 再计算RTTVAR (round-trip time variation)**
 
 ```
 RTTVAR = (1 - β) * RTTVAR + β * (|RTT - SRTT|) //计算 SRTT 与真实值的差距
-复制代码
 ```
 
 **3. 最终的RTO**
 
 ```
 RTO = µ * SRTT + ∂ * RTTVAR  =  SRTT + 4·RTTVAR  
-复制代码
+
 ```
 
 其中，`α = 0.125，β = 0.25， μ = 1，∂ = 4`，这些参数都是大量结果得出的最优参数。
@@ -576,7 +574,6 @@ ARP 协议协议，即**Address Resolution Protocol**，地址解析协议，用
 ```
 - cwnd = cwnd /2
 - sshthresh = cwnd
-复制代码
 ```
 
 然后，真正的快速算法如下：
@@ -763,14 +760,12 @@ SQL注入是一种代码注入技术，一般被应用于攻击web应用程序�
 name = "田螺"; //前端传过来的
 
 SQL= "select * from staff where name=" + name;  //根据前端传过来的name参数，查询数据库员工表staff
-复制代码
 ```
 
 因为SQL是直接拼接的，如果我们完全信任前端传的参数的话。假如前端传这么一个参数时`'' or '1'='1'`，SQL就变成酱紫的啦。
 
 ```
 select * from staff where name='' or '1'='1';
-复制代码
 ```
 
 这个SQL会把所有的员工信息全都查出来了，酱紫就请求用户已经越权啦。请求者可以获取所有员工的信息，信息已经暴露了啦。

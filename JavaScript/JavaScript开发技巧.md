@@ -233,7 +233,6 @@ function sum(arr) {
     }
     return res
 }
-复制代码
 ```
 
 **方法二：forEach循环**
@@ -321,7 +320,6 @@ function concat(arr1, arr2) {
     let resArr = arr1.concat(arr2)
     return resArr
 }
-复制代码
 ```
 
 **方法二：`...`扩展运算符**

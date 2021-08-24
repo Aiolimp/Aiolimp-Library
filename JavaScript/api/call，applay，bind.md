@@ -6,7 +6,6 @@
 fun.call(thisArg, param1, param2, ...)
 fun.apply(thisArg, [param1,param2,...])
 fun.bind(thisArg, param1, param2, ...)
-复制代码
 ```
 
 #### 返回值：
@@ -179,7 +178,6 @@ for (var i = 1; i <= 5; i++) {
         console.log(i) // 依次输出：6 6 6 6 6
     }, i * 1000);
 }
-复制代码
 ```
 
 造成这个现象的原因是等到`setTimeout`异步执行时,`i`已经变成6了。
@@ -200,7 +198,6 @@ for (var i = 1; i <= 5; i++) {
         }, i * 1000);
     }(i));
 }
-复制代码
 ```
 
 在这里创建了一个闭包，每次循环都会把`i`的最新值传进去，然后被闭包保存起来。
@@ -214,7 +211,6 @@ for (var i = 1; i <= 5; i++) {
         console.log('bind', i) // 依次输出：1 2 3 4 5
     }.bind(null, i), i * 1000);
 }
-复制代码
 ```
 
 **实际上这里也用了闭包，我们知道bind会返回一个函数，这个函数也是闭包**。
@@ -250,7 +246,6 @@ class PageA {
     }
 }
 new PageA()
-复制代码
 ```
 
 #### 回调函数`this`为何会丢失？
@@ -261,7 +256,6 @@ new PageA()
 
 ```
 this.pageClass = new Page(this.handleMessage)
-复制代码
 ```
 
 因为传递过去的`this.handleMessage`是一个函数内存地址，没有上下文对象，也就是说该函数没有绑定它的`this`指向。
@@ -277,7 +271,6 @@ class Page {
         this.MessageCallBack('发给注册页面的信息')
     }
 }
-复制代码
 ```
 
 既然知道问题了，那我们只要绑定回调函数的`this`指向为`PageA`就解决问题了。
@@ -290,7 +283,6 @@ class Page {
 
 ```
 this.pageClass = new Page(this.handleMessage.bind(this)) // 绑定回调函数的this指向
-复制代码
 ```
 
 PS： 这也是为什么`react`的`render`函数在绑定回调函数的时候，也要使用bind绑定一下`this`的指向，也是因为同样的问题以及原理。

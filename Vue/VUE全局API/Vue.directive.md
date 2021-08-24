@@ -78,7 +78,6 @@ export default {
 import Vue from 'vue'
 import Directives from './JS/directives'
 Vue.use(Directives)
-复制代码
 ```
 
 指令定义函数提供了几个钩子函数（可选）：
