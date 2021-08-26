@@ -678,3 +678,30 @@ nextTick是Vue提供的一个全局API，因为vue在更新DOM时是异步执行
 
    可以同时支持object和array，动态属性增、删都可以拦截，新增数据结构均支持，对象嵌套属性运行时递归，用到才代理，也不需要维护特别多的依赖关系，性能取得很大进步。
 
+### 27.Vue2.0 响应式数据的原理
+
+整体思路是数据劫持+观察者模式
+
+
+首先判断传进来的值是对象还是数组，如果是对象，内部通过递归调用defineReactive方法，使用 Object.defineProperty 将属性进行劫持，拦截对象里每个key的get和set属性，在get里进行依赖收集`dep.depend（）`，在set`dep.notify()`方法里进行派发更新。如果是数组通过重写数组的方法，对数组中的对象继续进行数据劫持。当页面使用对应属性时，每个属性都拥有自己的 dep 属性，存放他所依赖的 watcher（依赖收集），当属性变化后会通知自己对应的 watcher 去派发更新。通过 Object.defineProperty （）把data中的数据代理到VUE实例上面，就可以直接使用this.进行调用。
+
+### 28.Vue2.0模板编译原理
+
+#### vue渲染过程
+
+渲染的方式：**无论什么情况，最后都统一是要使用render函数渲染**
+
+- 渲染到哪个根节点上 
+  - 判断有无el属性，有的话直接获取el根节点，没有的话调用$mount去获取根节点
+- 渲染哪个模板
+  - 有render：这时候优先执行render函数，render优先级 > template
+  - 无render：
+    - 有template：拿template去解析成render函数的所需的格式，并使用调用render函数渲染
+    - 无template：拿el根节点的outerHTML去解析成render函数的所需的格式，并使用调用render函数渲染
+
+Vue 的编译过程就是将 template 转化为 render 函数的过程 分为以下三步
+
+第一步是将 模板字符串template 解析成`抽象语法树（AST）`（解析器）
+第二步是对 AST 进行静态节点标记，主要用来做虚拟DOM的渲染优化（优化器）
+第三步是 将`抽象语法树（AST）`转成render渲染所需的格式
+

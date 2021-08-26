@@ -49,7 +49,6 @@ function defineReactive(data, key, value) {
     // 因为对象里可能有对象或者数组，所以需要递归
     observe(value)
 
-
     // 核心
     // 拦截对象里每个key的get和set属性，进行读写监听
     // 从而实现了读写都能捕捉到，响应式的底层原理
