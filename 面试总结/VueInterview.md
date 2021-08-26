@@ -705,3 +705,192 @@ Vue 的编译过程就是将 template 转化为 render 函数的过程 分为以
 第二步是对 AST 进行静态节点标记，主要用来做虚拟DOM的渲染优化（优化器）
 第三步是 将`抽象语法树（AST）`转成render渲染所需的格式
 
+### 29.Vue2.0初始渲染原理
+
+- 将渲染函数`_render`和视图更新函数`_update`挂载在Vue的原型上
+- 通过创建元素的元素和文本的虚拟节点来将render函数渲染成虚拟dom
+- 通过patch方法比较新旧节点将虚拟dom转化为真实dom
+
+### 30.虚拟 DOM 是什么 有什么优缺点
+
+由于在浏览器中操作 DOM 是很昂贵的。频繁的操作 DOM，会产生一定的性能问题。这就是虚拟 Dom 的产生原因。Vue2 的 Virtual DOM 借鉴了开源库 snabbdom 的实现。Virtual DOM 本质就是用一个原生的 JS 对象去描述一个 DOM 节点，是对真实 DOM 的一层抽象。
+
+**优点：**
+
+1. 保证性能下限： 框架的虚拟 DOM 需要适配任何上层 API 可能产生的操作，它的一些 DOM 操作的实现必须是普适的，所以它的性能并不是最优的；但是比起粗暴的 DOM 操作性能要好很多，因此框架的虚拟 DOM 至少可以保证在你不需要手动优化的情况下，依然可以提供还不错的性能，即保证性能的下限；
+2. 无需手动操作 DOM： 我们不再需要手动去操作 DOM，只需要写好 View-Model 的代码逻辑，框架会根据虚拟 DOM 和 数据双向绑定，帮我们以可预期的方式更新视图，极大提高我们的开发效率；
+3. 跨平台： 虚拟 DOM 本质上是 JavaScript 对象,而 DOM 与平台强相关，相比之下虚拟 DOM 可以进行更方便地跨平台操作，例如服务器渲染、weex 开发等等。
+
+**缺点:**
+
+1. 无法进行极致优化： 虽然虚拟 DOM + 合理的优化，足以应对绝大部分应用的性能需求，但在一些性能要求极高的应用中虚拟 DOM 无法进行针对性的极致优化。
+2. 首次渲染大量 DOM 时，由于多了一层虚拟 DOM 的计算，会比 innerHTML 插入慢。
+
+### 31. v-model 原理
+
+v-model 只是语法糖而已
+
+v-model 在内部为不同的输入元素使用不同的 property 并抛出不同的事件：
+
+- text 和 textarea 元素使用 value property 和 input 事件；
+- checkbox 和 radio 使用 checked property 和 change 事件；
+- select 字段将 value 作为 prop 并将 change 作为事件。
+
+> 注意:对于需要使用输入法 (如中文、日文、韩文等) 的语言，你会发现 v-model 不会在输入法组合文字过程中得到更新。
+
+在普通标签上
+
+```javascript
+    <input v-model="sth" />  //这一行等于下一行
+    <input v-bind:value="sth" v-on:input="sth = $event.target.value" />
+```
+
+在组件上
+
+```html
+<currency-input v-model="price"></currentcy-input>
+<!--上行代码是下行的语法糖
+ <currency-input :value="price" @input="price = arguments[0]"></currency-input>
+-->
+
+<!-- 子组件定义 -->
+Vue.component('currency-input', {
+ template: `
+  <span>
+   <input
+    ref="input"
+    :value="value"
+    @input="$emit('input', $event.target.value)"
+   >
+  </span>
+ `,
+ props: ['value'],
+})
+```
+
+### 32. v-for 为什么要加 key
+
+如果不使用 key，Vue 会使用一种最大限度减少动态元素并且尽可能的尝试就地修改/复用相同类型元素的算法。key 是为 Vue 中 vnode 的唯一标记，通过这个 key，我们的 diff 操作可以更准确、更快速
+
+**更准确**：因为带 key 就不是就地复用了，在 sameNode 函数 a.key === b.key 对比中可以避免就地复用的情况。所以会更加准确。
+
+**更快速**：利用 key 的唯一性生成 map 对象来获取对应节点，比遍历方式更快
+
+### 33. Vue 事件绑定原理
+
+原生事件绑定是通过 addEventListener 绑定给真实元素的，组件事件绑定是通过 Vue 自定义的$on 实现的。如果要在组件上使用原生事件，需要加.native 修饰符，这样就相当于在父组件中把子组件当做普通 html 标签，然后加上原生事件。
+
+$on、$emit 是基于发布订阅模式的，维护一个事件中心，on 的时候将事件按名称存在事件中心里，称之为订阅者，然后 emit 将对应的事件进行发布，去执行事件中心里的对应的监听器
+
+### 34. vue-router 动态路由是什么 有什么问题
+
+我们经常需要把某种模式匹配到的所有路由，全都映射到同个组件。例如，我们有一个 User 组件，对于所有 ID 各不相同的用户，都要使用这个组件来渲染。那么，我们可以在 vue-router 的路由路径中使用“动态路径参数”(dynamic segment) 来达到这个效果：
+
+```javascript
+const User = {
+  template: "<div>User</div>",
+};
+
+const router = new VueRouter({
+  routes: [
+    // 动态路径参数 以冒号开头
+    { path: "/user/:id", component: User },
+  ],
+});
+```
+
+> 问题:vue-router 组件复用导致路由参数失效怎么办？
+
+解决方法：
+
+1.通过 watch 监听路由参数再发请求
+
+```javascript
+watch: { //通过watch来监听路由变化
+
+ "$route": function(){
+ this.getData(this.$route.params.xxx);
+ }
+}
+```
+
+2.用 :key 来阻止“复用”
+
+```html
+<router-view :key="$route.fullPath" />
+```
+
+### 34. 使用过 Vue SSR 吗？说说 SSR
+
+SSR 也就是服务端渲染，也就是将 Vue 在客户端把标签渲染成 HTML 的工作放在服务端完成，然后再把 html 直接返回给客户端。
+
+**优点：**
+
+SSR 有着更好的 SEO、并且首屏加载速度更快
+
+**缺点：** 开发条件会受到限制，服务器端渲染只支持 beforeCreate 和 created 两个钩子，当我们需要一些外部扩展库时需要特殊处理，服务端渲染应用程序也需要处于 Node.js 的运行环境。
+
+服务器会有更大的负载需求
+
+### 35. vue 中使用了哪些设计模式
+
+1.工厂模式 - 传入参数即可创建实例
+
+虚拟 DOM 根据参数的不同返回基础标签的 Vnode 和组件 Vnode
+
+2.单例模式 - 整个程序有且仅有一个实例
+
+vuex 和 vue-router 的插件注册方法 install 判断如果系统存在实例就直接返回掉
+
+3.发布-订阅模式 (vue 事件机制)
+
+4.观察者模式 (响应式数据原理)
+
+5.装饰模式: (@装饰器的用法)
+
+6.策略模式 策略模式指对象有某个行为,但是在不同的场景中,该行为有不同的实现方案-比如选项的合并策略
+
+#### 36. 你都做过哪些 Vue 的性能优化
+
+> 这里只列举针对 Vue 的性能优化 整个项目的性能优化是一个大工程 可以另写一篇性能优化的文章 哈哈
+
+- 对象层级不要过深，否则性能就会差
+- 不需要响应式的数据不要放到 data 中（可以用 Object.freeze() 冻结数据）
+- v-if 和 v-show 区分使用场景
+- computed 和 watch 区分使用场景
+- v-for 遍历必须加 key，key 最好是 id 值，且避免同时使用 v-if
+- 大数据列表和表格性能优化-虚拟列表/虚拟表格
+- 防止内部泄漏，组件销毁后把全局变量和事件销毁
+- 图片懒加载
+- 路由懒加载
+- 第三方插件的按需引入
+- 适当采用 keep-alive 缓存组件
+- 防抖、节流运用
+- 服务端渲染 SSR or 预渲染
+
+### 37. 能说下 vue-router 中常用的路由模式实现原理吗
+
+**hash 模式**
+
+1. location.hash 的值实际就是 URL 中#后面的东西 它的特点在于：hash 虽然出现 URL 中，但不会被包含在 HTTP 请求中，对后端完全没有影响，因此改变 hash 不会重新加载页面。
+2. 可以为 hash 的改变添加监听事件
+
+```javascript
+window.addEventListener("hashchange", funcRef, false);
+复制代码
+```
+
+每一次改变 hash（window.location.hash），都会在浏览器的访问历史中增加一个记录利用 hash 的以上特点，就可以来实现前端路由“更新视图但不重新请求页面”的功能了
+
+> 特点：兼容性好但是不美观
+
+**history 模式**
+
+利用了 HTML5 History Interface 中新增的 pushState() 和 replaceState() 方法。
+
+这两个方法应用于浏览器的历史记录站，在当前已有的 back、forward、go 的基础之上，它们提供了对历史记录进行修改的功能。这两个方法有个共同的特点：当调用他们修改浏览器历史记录栈后，虽然当前 URL 改变了，但浏览器不会刷新页面，这就为单页应用前端路由“更新视图但不重新请求页面”提供了基础。
+
+> 特点：虽然美观，但是刷新会出现 404 需要后端进行配置
+
+
+
