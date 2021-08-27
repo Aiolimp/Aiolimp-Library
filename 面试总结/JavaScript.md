@@ -44,7 +44,6 @@
 - [语法和API](#语法和api)
   - [**1.浅谈 JavaScript 中变量和函数声明的提升**?](#1浅谈-javascript-中变量和函数声明的提升)
   - [2.var,let和const的区别是什么？](#2varlet和const的区别是什么)
-  
 ## 变量和类型
 
 ### 1. JavaScript 有几种类型的值？你能画一下他们的内存图吗？
@@ -682,3 +681,182 @@ on 对象、navigator 对象、screen 对象等子对象，并且 DOM 的最根�
 4.同一作用域下let和const不能声明同名变量，而var可以
 
 5.暂时性死区  const声明的是常量，不能修改。
+
+## Webpack
+
+### 1.你知道webpack的作用是什么吗？
+
+模块打包。可以将不同模块的文件打包整合在一起，并且保证它们之间的引用正确，执行有序。利用打包我们就可以在开发的时候根据我们自己的业务自由划分文件模块，保证项目结构的清晰和可读性。
+
+编译兼容。在前端的“上古时期”，手写一堆浏览器兼容代码一直是令前端工程师头皮发麻的事情，而在今天这个问题被大大的弱化了，通过`webpack`的`Loader`机制，不仅仅可以帮助我们对代码做`polyfill`，还可以编译转换诸如`.less, .vue, .jsx`这类在浏览器无法识别的格式文件，让我们在开发的时候可以使用新特性和新语法做开发，提高开发效率。
+
+能力扩展。通过`webpack`的`Plugin`机制，我们在实现模块化打包和编译兼容的基础上，可以进一步实现诸如按需加载，代码压缩等一系列功能，帮助我们进一步提高自动化程度，工程效率以及打包输出的质量。
+
+### 2.说一下模块打包运行原理？
+
+如果面试官问你`Webpack`是如何把这些模块合并到一起，并且保证其正常工作的，你是否了解呢？
+
+首先我们应该简单了解一下`webpack`的整个打包流程：
+
+- 1、读取`webpack`的配置参数；
+- 2、启动`webpack`，创建`Compiler`对象并开始解析项目；
+- 3、从入口文件（`entry`）开始解析，并且找到其导入的依赖模块，递归遍历分析，形成依赖关系树；
+- 4、对不同文件类型的依赖模块文件使用对应的`Loader`进行编译，最终转为`Javascript`文件；
+- 5、整个过程中`webpack`会通过发布订阅模式，向外抛出一些`hooks`，而`webpack`的插件即可通过监听这些关键的事件节点，执行插件任务进而达到干预输出结果的目的。
+
+其中文件的解析与构建是一个比较复杂的过程，在`webpack`源码中主要依赖于`compiler`和`compilation`两个核心对象实现。
+
+`compiler`对象是一个全局单例，他负责把控整个`webpack`打包的构建流程。 `compilation`对象是每一次构建的上下文对象，它包含了当次构建所需要的所有信息，每次热更新和重新构建，`compiler`都会重新生成一个新的`compilation`对象，负责此次更新的构建过程。
+
+而每个模块间的依赖关系，则依赖于`AST`语法树。每个模块文件在通过`Loader`解析完成之后，会通过`acorn`库生成模块代码的`AST`语法树，通过语法树就可以分析这个模块是否还有依赖的模块，进而继续循环执行下一个模块的编译解析。
+
+最终`Webpack`打包出来的`bundle`文件是一个`IIFE`的执行函数。
+
+```js
+// webpack 5 打包的bundle文件内容
+
+(() => { // webpackBootstrap
+    var __webpack_modules__ = ({
+        'file-A-path': ((modules) => { // ... })
+        'index-file-path': ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => { // ... })
+    })
+    
+    // The module cache
+    var __webpack_module_cache__ = {};
+    
+    // The require function
+    function __webpack_require__(moduleId) {
+        // Check if module is in cache
+        var cachedModule = __webpack_module_cache__[moduleId];
+        if (cachedModule !== undefined) {
+                return cachedModule.exports;
+        }
+        // Create a new module (and put it into the cache)
+        var module = __webpack_module_cache__[moduleId] = {
+                // no module.id needed
+                // no module.loaded needed
+                exports: {}
+        };
+
+        // Execute the module function
+        __webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+
+        // Return the exports of the module
+        return module.exports;
+    }
+    
+    // startup
+    // Load entry module and return exports
+    // This entry module can't be inlined because the eval devtool is used.
+    var __webpack_exports__ = __webpack_require__("./src/index.js");
+})
+```
+
+和`webpack4`相比，`webpack5`打包出来的bundle做了相当的精简。在上面的打包`demo`中，整个立即执行函数里边只有三个变量和一个函数方法，`__webpack_modules__`存放了编译后的各个文件模块的JS内容，`__webpack_module_cache__ `用来做模块缓存，`__webpack_require__`是`Webpack`内部实现的一套依赖引入函数。最后一句则是代码运行的起点，从入口文件开始，启动整个项目。
+
+其中值得一提的是`__webpack_require__`模块引入函数，我们在模块化开发的时候，通常会使用`ES Module`或者`CommonJS`规范导出/引入依赖模块，`webpack`打包编译的时候，会统一替换成自己的`__webpack_require__`来实现模块的引入和导出，从而实现模块缓存机制，以及抹平不同模块规范之间的一些差异性。
+
+### 4.Loader和Plugin的区别？
+
+`Loader` 本质就是一个函数，在该函数中对接收到的内容进行转换，返回转换后的结果。 因为 Webpack 只认识 JavaScript，所以 Loader 就成了翻译官，对其他类型的资源进行转译的预处理工作。
+
+`Plugin` 就是插件，基于事件流框架 `Tapable`，插件可以扩展 Webpack 的功能，在 Webpack 运行的生命周期中会广播出许多事件，Plugin 可以监听这些事件，在合适的时机通过 Webpack 提供的 API 改变输出结果。
+
+`Loader` 在 module.rules 中配置，作为模块的解析规则，类型为数组。每一项都是一个 Object，内部包含了 test(类型文件)、loader、options (参数)等属性。
+
+`Plugin` 在 plugins 中单独配置，类型为数组，每一项是一个 Plugin 的实例，参数都通过构造函数传入。
+
+### 5.Webpack构建流程简单说一下
+
+- `初始化参数`：从配置文件和 Shell 语句中读取与合并参数，得出最终的参数
+- `开始编译`：用上一步得到的参数初始化 Compiler 对象，加载所有配置的插件，执行对象的 run 方法开始执行编译
+- `确定入口`：根据配置中的 entry 找出所有的入口文件
+- `编译模块`：从入口文件出发，调用所有配置的 Loader 对模块进行翻译，再找出该模块依赖的模块，再递归本步骤直到所有入口依赖的文件都经过了本步骤的处理
+- `完成模块编译`：在经过第4步使用 Loader 翻译完所有模块后，得到了每个模块被翻译后的最终内容以及它们之间的依赖关系
+- `输出资源`：根据入口和模块之间的依赖关系，组装成一个个包含多个模块的 Chunk，再把每个 Chunk 转换成一个单独的文件加入到输出列表，这步是可以修改输出内容的最后机会
+- `输出完成`：在确定好输出内容后，根据配置确定输出的路径和文件名，把文件内容写入到文件系统
+
+在以上过程中，`Webpack` 会在特定的时间点广播出特定的事件，插件在监听到感兴趣的事件后会执行特定的逻辑，并且插件可以调用 Webpack 提供的 API 改变 Webpack 的运行结果。
+
+简单说
+
+- 初始化：启动构建，读取与合并配置参数，加载 Plugin，实例化 Compiler
+- 编译：从 Entry 出发，针对每个 Module 串行调用对应的 Loader 去翻译文件的内容，再找到该 Module 依赖的 Module，递归地进行编译处理
+- 输出：将编译后的 Module 组合成 Chunk，将 Chunk 转换成文件，输出到文件系统中
+
+### 6.常见的loader
+
+- `file-loader`：把文件输出到一个文件夹中，在代码中通过相对 URL 去引用输出的文件 (处理图片和字体)
+
+- `url-loader`：与 file-loader 类似，区别是用户可以设置一个阈值，大于阈值会交给 file-loader 处理，小于阈值时返回文件 base64 形式编码 (处理图片和字体)
+
+- `image-loader`：加载并且压缩图片文件
+- `json-loader` 加载 JSON 文件（默认包含）
+
+- `babel-loader`：把 ES6 转换成 ES5
+
+- `sass-loader`：将SCSS/SASS代码转换成CSS
+- `css-loader`：加载 CSS，支持模块化、压缩、文件导入等特性
+- `style-loader`：把 CSS 代码注入到 JavaScript 中，通过 DOM 操作去加载 CSS
+
+- `vue-loader`：加载 Vue.js 单文件组件
+
+### 7.有哪些常见的Plugin？
+
+- `html-webpack-plugin`：简化 HTML 文件创建 (依赖于 html-loader)
+
+- `mini-css-extract-plugin`: 分离样式文件，CSS 提取为独立文件，支持按需加载 (替代extract-text-webpack-plugin)
+
+- `OptimizeCssAssetsWebpackPlugin`:压缩css代码
+
+- `HotModuleReplacementPlugin` 热更新
+
+### 8.source map是什么？生产环境怎么用？
+
+`source map` 是将编译、打包、压缩后的代码映射回源代码的过程。打包压缩后的代码不具备良好的可读性，想要调试源码就需要 soucre map。
+
+map文件只要不打开开发者工具，浏览器是不会加载的。
+
+线上环境一般有三种处理方案：
+
+- `hidden-source-map`：借助第三方错误监控平台 Sentry 使用
+- `nosources-source-map`：只会显示具体行数以及查看源代码的错误栈。安全性比 sourcemap 高
+- `sourcemap`：通过 nginx 设置将 .map 文件只对白名单开放(公司内网)
+
+注意：避免在生产中使用 `inline-` 和 `eval-`，因为它们会增加 bundle 体积大小，并降低整体性能。
+
+### 9.说一下 Webpack 的热更新原理吧
+
+(敲黑板，这道题必考)
+
+`Webpack` 的热更新又称热替换（`Hot Module Replacement`），缩写为 `HMR`。 这个机制可以做到不用刷新浏览器而将新变更的模块替换掉旧的模块。
+
+HMR的核心就是客户端从服务端拉去更新后的文件，准确的说是 chunk diff (chunk 需要更新的部分)，实际上 WDS（`webpack dev server`） 与浏览器之间维护了一个 `Websocket`，当本地资源发生变化时，WDS 会向浏览器推送更新，并带上构建时的 hash，让客户端与上一次资源进行对比。客户端对比出差异后会向 WDS 发起 `Ajax` 请求来获取更改内容(文件列表、hash)，这样客户端就可以再借助这些信息继续向 WDS 发起 `jsonp` 请求获取该chunk的增量更新。
+
+后续的部分(拿到增量更新之后如何处理？哪些状态该保留？哪些又需要更新？)由 `HotModulePlugin` 来完成，提供了相关 API 以供开发者针对自身场景进行处理，像`react-hot-loader` 和 `vue-loader` 都是借助这些 API 实现 HMR。
+
+### 10.loader
+
+`Loader` 在 `module.rules` 中配置，作为模块的解析规则，类型为数组。每一项都是一个 `Object`，内部包含了 test(类型文件)、loader、options (参数)等属性。Webpack在转换该文件类型的时候，会按顺序链式调用每一个`loader`，每个loader遵循单一原则，并且各个loader完全独立。
+
+### 11.Plugin
+
+`Plugin`主要负责扩展功能，通过plugin可以监听到webpack运行生命周期里广播出来的事件，通过webpack提供的api去实现一些动作。
+
+### 12.webpack优化
+
+- 使用HappyPack开启多进程Loader
+- webpack-parallel-uglify-plugin进行代码压缩
+  - mini-css-extract-plugin压缩css
+  -  image-webpack-loader压缩图片
+- 缩小文件搜索范围
+  - alias：通过alias创建文件别名
+  - include、exclude：`include`来指定只解析该路径下的对应文件，`exclude`来指定不解析该路径下的对应文件。
+  - noParse：`noParse`配置不需要解析的文件。通常我们会忽略一些大型插件从而来提高构建性能。
+  - extensions ：webpack会根据`extensions`定义的后缀查找文件(频率较高的文件类型优先写在前面)
+
+- cache-loader 配置缓存
+- `tree-shaking`：用来清除代码中无用的部分。
+
+
+
