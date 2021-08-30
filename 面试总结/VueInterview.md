@@ -877,7 +877,6 @@ vuex 和 vue-router 的插件注册方法 install 判断如果系统存在实例
 
 ```javascript
 window.addEventListener("hashchange", funcRef, false);
-复制代码
 ```
 
 每一次改变 hash（window.location.hash），都会在浏览器的访问历史中增加一个记录利用 hash 的以上特点，就可以来实现前端路由“更新视图但不重新请求页面”的功能了
