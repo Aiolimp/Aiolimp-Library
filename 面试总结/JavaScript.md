@@ -577,6 +577,16 @@ this 就是一个指针，**永远指向最后调用它的那个对象**。
 
 **缺点：** 无法回收闭包中引用变量，容易造成内存泄漏
 
+### 5.bind call apply区别
+
+- 三者都可以改变函数的this对象指向。
+
+- 三者第一个参数都是this要指向的对象，如果如果没有这个参数或参数为undefined或null，则默认指向全局window。
+
+- 三者都可以传参，但是apply是数组，而call是参数列表，且apply和call是一次性传入参数，而bind可以分为多次传入。
+
+- bind 改变this指向后不会立即执行，而是返回一个永久改变this指向的函数便于稍后调用； apply, call则是立即调用
+
 ## 执行机制
 
 ### 1.三种事件模型是什么？
@@ -655,6 +665,63 @@ BOM 指的是浏览器对象模型，它指的是把浏览器当做一个对象�
 on 对象、navigator 对象、screen 对象等子对象，并且 DOM 的最根本的对象 document 对象也是 BOM 的 window 对
 象的子对象。
 
+### 8.DOM 操作——怎样添加、移除、移动、复制、创建和查找节点？
+
+（1）创建新节点
+
+```js
+  createDocumentFragment()    //创建一个DOM片段
+  createElement()   //创建一个具体的元素
+  createTextNode()   //创建一个文本节点
+```
+
+（2）添加、移除、替换、插入
+
+```js
+appendChild(node)
+removeChild(node)
+replaceChild(new,old)
+insertBefore(new,old)
+```
+
+（3）查找
+
+```js
+getElementById();
+getElementsByName();
+getElementsByTagName();
+getElementsByClassName();
+querySelector();
+querySelectorAll();
+```
+
+（4）属性操作
+
+```js
+getAttribute(key);
+setAttribute(key, value);
+hasAttribute(key);
+removeAttribute(key);
+```
+
+### 19.JS延迟加载的几种
+
+### 7.JS的运行机制
+
+1.js 是单线程运行的，在代码执行的时候，通过将不同函数的执行上下文压入执行栈中来保证代码的有序执行。
+
+2.在执行同步代码的时候，如果遇到了异步事件，js 引擎并不会一直等待其返回结果，而是会将这个事件挂起，继续执行执行栈中的其他任务
+
+3.当同步事件执行完毕后，再将异步事件对应的回调加入到与当前执行栈中不同的另一个任务队列中等待执行。
+
+4.任务队列可以分为宏任务对列和微任务对列，当当前执行栈中的事件执行完毕后，js 引擎首先会判断微任务对列中是否有任务可以执行，如果有就将微任务队首的事件压入栈中执行。
+
+5.当微任务对列中的任务都执行完成后再去判断宏任务对列中的任务。
+
+微任务包括了 promise 的回调、node 中的 process.nextTick 、对 Dom 变化监听的 MutationObserver。
+
+宏任务包括了 script 脚本的执行、setTimeout ，setInterval ，setImmediate 一类的定时事件，还有如 I/O 操作、UI 渲 染等。
+
 ## 语法和API
 
 ### 1.浅谈 JavaScript 中变量和函数声明的提升?
@@ -678,6 +745,158 @@ on 对象、navigator 对象、screen 对象等子对象，并且 DOM 的最根�
 4.同一作用域下let和const不能声明同名变量，而var可以
 
 5.暂时性死区  const声明的是常量，不能修改。
+
+### 3.`async/await`
+
+async/await是一种建立在promise对象上编写异步操作的解决方案。
+
+使用async就表示声明的函数是异步的，async会返回一个Promise对象，如果返回的是一个值，Promise的rseolve方法会负责传递这个值。当async函数抛出异常时，Promise的reject方法也会传递这个异常值。await会暂停执行async中的代码，等待一个异步方法执行完成。await关键字后面需要跟一个promise对象，并且执行的结果就是后面promise执行的结果。
+
+当一个async函数中有多个await时，程序变成串行操作，可以使用Promise.all实现并行操作，all中的方法是同时执行的。其中一个await状态变成reject，后面的操作都不会执行。
+
+### 4.Generator
+
+Generator（生成器）就是Iterator接口的具体实现方式。特点就是可以控制函数的执行。
+
+执行Generator函数会返回一个遍历器对象，每一次Generator函数里面的yield都相当与执行一次遍历器对象的next()方法，并且可以通过next(value)方法传入自定义的value,来改变Generator函数的行为，控制函数的执行。
+
+### 5.for...of和for...in区别
+
+1. 推荐在循环对象属性的时候，使用`for...in`,在遍历数组的时候的时候使用`for...of`。
+2. `for...in`循环出的是key，`for...of`循环出的是value
+3. 注意，`for...of`是ES6新引入的特性。修复了ES5引入的`for...in`的不足
+4. `for...of`不能循环普通的对象，需要通过和`Object.keys()`搭配使用
+
+### 6.iterator
+
+iterator迭代器，它主要为所有的数据结构提供一个统一的访问接口，通过iterator来实现遍历操作。[Symbol.iterator]属性名是它的固定写法，只要拥有这个属性对象，就能够用迭代器的方式进行遍历，该函数必须返回一个对象，并且对象中包含next()方法，执行next()方法可以返回包含value/done属性的iterator对象，value就是当前对象的值，done是一个属性值，遍历是否结束。而部署了iterator接口就可以使用for...of进行遍历
+
+### 7.promise对象
+
+Promise 是异步编程的一种解决方案，Promise 是一个对象，从它可以获取异步操作的消息。Promise 提供统一的 API包括他自身的all、race、reject、resovle等方法以及原型中包含catch、then、finally等方法。各种异步操作都可以用同样的方法进行处理。很好的解决了地狱回调问题(避免了层层嵌套的回调函数)。
+
+promis对象有三种状态：**pending(进行中)、fulfilled(已成功)、reject(已失败)**。
+
+可以通过过new promise来创建一个对象，Promise对象的参数为一个函数，并且传入resolve和reject两个参数，分别表示异步操作执行成功的回调函数和异步操作执行失败的回调函数。
+
+promise.all返回一个新的promise对象，并且只有所有promise都成功的时候才会触发成功，只要有一个触发失败就会返回失败的对象。
+
+promise.race就是看他参数中那个处理的快就返回哪个结果
+
+### 8.模块化开发的理解
+
+ 模块化就是实现一组特定功能的方法，通过模块化我们可以存储多个独立的功能块，复用性高。
+
+JS中有四种模块加载方案：
+
+1.CommonJS，它通过require来引入模块，通过module.exports来导出模块。主要作用与服务端的解决方案，并且以同步的方式来引入模块。
+
+2.其次就是AMD和CMD方案，这两种方案都是通过异步的方式来加载模块，不同的是在定义模块时对依赖的处理方式和执行依赖的时间不同。
+
+3.ES6 提出的方案，使用 import 和 export 的形式来导入导出模块。
+
+### 9. requireJS的核心原理是什么？
+
+require.js 的核心原理是通过动态创建 script 脚本来异步引入模块，然后对每个脚本的 load 事件进行监听，如果每个脚本都加载完成了，再调用回调函数。
+
+### 10.set、weakSet 、map、weakMap
+
+Set。它类似于数组，但是成员的值都是唯一的，没有重复的值。
+
+WeakSet 结构与 Set 类似，也是不重复的值的集合。WeakSet 的成员只能是对象
+
+Map是JavaScript 的对象（Object），本质上是键值对的集合（Hash 结构），但是传统上只能用字符串当作键。
+
+`WeakMap`结构与`Map`结构类似，也是用于生成键值对的集合。`WeakMap`只接受对象作为键名（`null`除外）
+
+`WeakMap`的键名所指向的对象，不计入垃圾回收机制。
+
+### 11.JS深拷贝和浅拷贝
+
+如何区分深拷贝与浅拷贝，简单点来说，就是假设B复制了A，当修改A时，看B是否会发生变化，如果B也跟着变了，说明这是浅拷贝如果B没变，那就是深拷贝。
+
+**浅拷贝：**
+
+**1.object.assign(target,source)**
+Object.assign 方法只复制源对象中可枚举的属性和对象自身的属性。
+如果目标对象中的属性具有相同的键，则属性将被源中的属性覆盖。后来的源的属性将类似地覆盖早先的属性。
+**2.使用扩展运算符**
+
+**深拷贝：**
+
+1用递归去复制所有层级属性。
+
+```javascript
+function deepClone(obj){
+    let objClone = Array.isArray(obj)?[]:{};
+    if(obj && typeof obj==="object"){
+        for(key in obj){
+            if(obj.hasOwnProperty(key)){
+                //判断ojb子元素是否为对象，如果是，递归复制
+                if(obj[key]&&typeof obj[key] ==="object"){
+                    objClone[key] = deepClone(obj[key]);
+                }else{
+                    //如果不是，简单复制
+                    objClone[key] = obj[key];
+                }
+            }
+        }
+    }
+    return objClone;
+}    
+let a=[1,2,3,4],
+    b=deepClone(a);
+a[0]=2;
+console.log(a,b);
+```
+
+ 2.利用JSON.parse(JSON.stringify())。
+
+### 12. js 的节流与防抖
+
+**函数防抖** 是指在事件被触发 n 秒后再执行回调，如果在这 n 秒内事件又被触发，则重新计时。这可以使用在一些点击请求的事件上，避免因为用户的多次点击向后端发送多次请求。
+
+**函数节流** 是指规定一个单位时间，在这个单位时间内，只能有一次触发事件的回调函数执行，如果在同一个单位时间内某事件被触发多次，只有一次能生效。节流可以使用在 scroll 函数的事件监听上，通过事件节流来降低事件调用的频率。
+
+```js
+// 函数防抖的实现
+function debounce(fn, wait) {
+  var timer = null;
+
+  return function() {
+    var context = this,
+      args = arguments;
+
+    // 如果此时存在定时器的话，则取消之前的定时器重新记时
+    if (timer) {
+      clearTimeout(timer);
+      timer = null;
+    }
+
+    // 设置定时器，使事件间隔指定事件后执行
+    timer = setTimeout(() => {
+      fn.apply(context, args);
+    }, wait);
+  };
+}
+
+// 函数节流的实现;
+function throttle(fn, delay) {
+  var preTime = Date.now();
+
+  return function() {
+    var context = this,
+      args = arguments,
+      nowTime = Date.now();
+
+    // 如果两次时间间隔超过了指定时间，则执行函数。
+    if (nowTime - preTime >= delay) {
+      preTime = Date.now();
+      return fn.apply(context, args);
+    }
+  };
+}
+```
 
 ## Webpack
 
@@ -834,11 +1053,11 @@ HMR的核心就是客户端从服务端拉去更新后的文件，准确的说�
 
 ### 10.loader
 
-`Loader` 在 `module.rules` 中配置，作为模块的解析规则，类型为数组。每一项都是一个 `Object`，内部包含了 test(类型文件)、loader、options (参数)等属性。Webpack在转换该文件类型的时候，会按顺序链式调用每一个`loader`，每个loader遵循单一原则，并且各个loader完全独立。
+loader是文件加载器，能够加载资源文件，并对这些文件进行一些处理，诸如编译、压缩等，最终一起打包到指定的文件中。`Loader` 在 `module.rules` 中配置，作为模块的解析规则，类型为数组。每一项都是一个 `Object`，内部包含了 test(类型文件)、loader、options (参数)等属性。Webpack在转换该文件类型的时候，会按顺序链式调用每一个`loader`，每个loader遵循单一原则，并且各个loader完全独立。
 
 ### 11.Plugin
 
-`Plugin`主要负责扩展功能，通过plugin可以监听到webpack运行生命周期里广播出来的事件，通过webpack提供的api去实现一些动作。
+`Plugin`主要负责扩展功能，在webpack运行的生命周期中会广播出许多事件，plugin可以监听这些事件，在合适的时机通过webpack提供的API改变输出结果。
 
 ### 12.webpack优化
 
