@@ -95,23 +95,12 @@ fore来在一个元素前增加一些文本，并为这些文本添加样式。�
 
 ### 6.一般常见的几种居中的方法有
 
-对于宽高固定的元素
-
-（1）我们可以利用margin:0 auto来实现元素的水平居中。
-
-（2）利用绝对定位，设置四个方向的值都为0，并将margin设置为auto，由于宽高固定，因此对应方向实现平分，可以实现水
-平和垂直方向上的居中。
-
-（3）利用绝对定位，先将元素的左上角通过top:50%和left:50%定位到页面的中心，然后再通过margin负值来调整元素
-的中心点到页面的中心。
-
-（4）利用绝对定位，先将元素的左上角通过top:50%和left:50%定位到页面的中心，然后再通过translate来调整元素
-的中心点到页面的中心。
-
-（5）使用flex布局，通过align-items:center和justify-content:center设置容器的垂直和水平方向上为居中对
-齐，然后它的子元素也可以实现垂直和水平的居中。
-
-对于宽高不定的元素，上面的后面两种方法，可以实现元素的垂直和水平的居中。
+- 绝对定位方法：不确定当前div的宽度和高度，采用transform：translate(-50%,-50%)；当前div的父级添加相对定位(position:relative)
+- 绝对定位方法：确定当前div宽度和高度吗，margin值为当前div宽度一半的负值。
+- 绝对定位：calc函数动态计算  left: calc((200px-50px)/2) ; top: calc((200px-50px)/2) ;
+- 我们可以利用margin:0 auto来实现元素的水平居中。
+- 绝对定位方法：绝对定位下top left right bottom都设置为0,margin为auto
+- flex布局  justify-content: center; align-items: center;
 
 ### 7.display 有哪些值？说明他们的作用。
 
@@ -234,7 +223,68 @@ flex容器属性：
 - vh: css3新单位，viewpoint height的缩写，**视窗高度**，1vh等于视窗高度的1%。
    举个例子：浏览器高度900px, 1 vh = 900px/100 = 9 px。
 
+### 12.CSS浮动
 
+原因是，浮动的元素会脱离文档流，造成父元素高度坍塌的现象。
 
+清除浮动：
 
+- 将父级也设置成浮动
+
+- 给父级增加定位absolute*
+
+- 给父级设置overflow:hidden
+
+- 给父级设置对应的高度
+
+-  clear: both;
+
+- 给父级添加伪元素进行clear(最优解)
+
+  ```css
+             content: '.';
+              height: 0;
+              display: block;
+              clear: both;
+  ```
+
+  
+
+### 13.CSS元素隐藏
+
+**display:none**
+
+1.DOM结构：浏览器不会渲染display：none的元素，不占据空间。
+
+2.事件监听：无法进行DOM事件监听。
+
+3.性能：动态改变此属性会引起重排，性能较差。
+
+4.继承：不会被子元素继承，毕竟子元素也不会被渲染。
+
+5.transition:transiton不支持display。
+
+**visiblity：hidden**
+
+1.DOM结构：元素被隐藏，但是会渲染不会消失，占据空间。
+
+2.事件监听：无法进行DOM事件监听。
+
+3.性能：动态改变此属性会引起重绘，性能较高。
+
+4.继承：会被子元素继承，子元素可以通过visibilty:visible来取消隐藏。
+
+5.transition:visible会立即显示，隐藏时会延迟。
+
+**opacity：0**
+
+1.DOM结构：透明度为100%，元素隐藏，占据空间。
+
+2.事件监听：可以进行DOM事件监听。
+
+3.性能：提升为合成层，不会触发重绘，性能较高。
+
+4.继承：会被子元素继承，但是子元素不能使用opacity：1来取消隐藏。
+
+5.transition:opacity可以延时和隐藏
 
