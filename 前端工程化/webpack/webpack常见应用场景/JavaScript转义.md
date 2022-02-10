@@ -27,7 +27,7 @@ yarn add @babel/preset-env @babel/core core-js -D
 
 在根路径新建一个`.babelrc`。
 
-```json
+```javascript
 {
   "presets": [
     [
@@ -73,10 +73,4 @@ new Promise(resolve => {
 
 而在打包代码中，可以看到`webpack`使用了`polyfill`实现`promise`类，然后再去调用，从而兼容了低版本浏览器没有`promise`属性问题。
 
-- Aiolimp/杭州打工的陕西人
-- JavaScript/Vue
-- 偶尔写写博客
-- 偶尔逛逛掘金||b站
-- 偶尔看书、看看电影
-- 简历(待更)
 

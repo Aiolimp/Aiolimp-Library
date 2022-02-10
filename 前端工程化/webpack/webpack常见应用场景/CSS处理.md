@@ -180,7 +180,7 @@ module.exports = {
 
 当然，我们其实可以在`package.json`中填写兼容浏览器信息，或者使用`browserslist`配置文件`.browserslistrc`来填写，这样子如果我们以后使用其他插件也需要考虑到兼容浏览器的时候，就可以统一用到，比如说`babel`。
 
-```json
+```javascript
 // package.json 文件
 {
   ...
