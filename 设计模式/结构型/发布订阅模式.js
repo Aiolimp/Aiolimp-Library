@@ -51,7 +51,7 @@ let events = {
 };
 
 function cat() {
-    console.log('一起喵喵喵');
+    console.log('一起喵喵');
 }
 
 function dog() {
