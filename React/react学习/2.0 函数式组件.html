@@ -20,7 +20,19 @@
     <script type="text/javascript" src="../js/babel.min.js"></script>
 
 </body>
-    <script type="text/babel">/* 此处一定要写babel */
+<script type="text/babel">/* 此处一定要写babel */
+    //1.创建函数式组件
+    function MyComponent() {
+        console.log(this); //此处的this是undefined，因为babel编译后开启了严格模式
+        return '我是一个函数式组件'
+    }
+    //2.渲染组件到页面
+    ReactDOM.render(<MyComponent />, document.getElementById('test'));
+    /*
+        执行了ReactDOM.render(<MyComponent/>.......之后，发生了什么？
+                1.React解析组件标签，找到了MyComponent组件。
+                2.发现组件是使用函数定义的，随后调用该函数，将返回的虚拟DOM转为真实DOM，随后呈现在页面中。
+    */
+</script>
 
-    </script>
 </html>
