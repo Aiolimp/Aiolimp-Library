@@ -23,16 +23,17 @@
             constructor(props) {
                 super(props)
                 this.state = { isHot: false }
+                this.changeWeather = this.changeWeather.bind(this)
             }
             render() {
-                return <h2 onClick={demo}>今天天气很{this.state.isHot ? '炎热' : '凉爽'}</h2>
+                return <h2 onClick={this.changeWeather}>今天天气很{this.state.isHot ? '炎热' : '凉爽'}</h2>
+            }
+            changeWeather(){
+                console.log(this)
             }
         }
         //2.渲染组件到页面
         ReactDOM.render(<MyComponent />, document.getElementById('test'))
-        function demo(){
-            console.log(this)
-        }
     </script>
 </body>
 
