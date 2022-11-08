@@ -1,0 +1,1 @@
+export const addPersonAction = data => ({ type: 'addPerson', data })
