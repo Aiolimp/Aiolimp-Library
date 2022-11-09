@@ -2,7 +2,7 @@
 
 ### 一、队列简介
 
-队列是是一种受限的线性表，特点为**先进先出**（**FIFO**：first in first out）。
+队列是是一种受限的线性表，特点为**先进先出**（**FIFO**：first in first out）
 
 - 受限之处在于它只允许在表的**前端**（front）进行删除操作；
 - 在表的**后端**（rear）进行插入操作；[![image-20200226171659886](https://gitee.com/ahuntsun/BlogImgs/raw/master/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E9%98%9F%E5%88%97/1.png)](https://gitee.com/ahuntsun/BlogImgs/raw/master/数据结构与算法/队列/1.png)
