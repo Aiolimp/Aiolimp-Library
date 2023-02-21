@@ -11,7 +11,7 @@ function Vue(options) {
 initMixin(Vue)
 // 实例一个Vue对象
 
-let vue = new Vue({
+let Vue = new Vue({
     props: {},
     data() {
         return {
