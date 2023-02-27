@@ -66,15 +66,14 @@
     var a1 = "2022-8-12";
     var a2 = "2023-2-10";
     var b = GetNumberOfDays(a1, a2)
-
-    console.log(132323111)
-    let a = {
-        b:1,
-        c(){
-            console.log(this)
-        }
+    let ccc = {
+        c() { console.log(this) },
+        ccc: 1
     }
-    a.c(this);
+    function a() {
+        console.log(this)
+    }
+    ccc.c();
 </script>
 
 </html>
