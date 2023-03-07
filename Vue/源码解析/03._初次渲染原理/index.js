@@ -9,12 +9,27 @@ function Vue(options) {
 }
 // _init方法是挂载在Vue原型的方法 通过引入文件的方式进行原型挂载需要传入Vue
 // 此做法有利于代码分割
-initMixin(Vue);
+initMixin(vue);
+
+let vue = new Vue({
+  el: '#app',
+  data() {
+      return {
+          a: 1,
+          b: [1]
+      }
+  },
+  render(h) {
+      return h('div', { id: 'hhh' }, 'hello')
+  },
+  template: `<div id='hhh' style="aa:1;bb:2"><a>{{xxx}}{{ccc}}</a></div>`
+}).$mount('#app')
+
 
 // 混入_render
-renderMixin(Vue);
+renderMixin(vue);
 // 混入_update
-lifecycleMixin(Vue);
-export default Vue;
+lifecycleMixin(vue);
+export default vue;
 
 

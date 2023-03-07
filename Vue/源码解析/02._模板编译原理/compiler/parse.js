@@ -29,7 +29,7 @@ function createASTElement(tagName, attrs) {
     }
 }
 
-
+// 节点转AST的函数
 function handleStartTag({ tagName, attrs }) {
     // 传进来的element改成AST对象形式
     const element = createASTElement(tagName, attrs)
@@ -73,7 +73,7 @@ function handleChars(text) {
         })
     }
 }
-
+// 第一步执行parse函数
 function parse(html) {
     // 这里的html就是传进来的template字符串
     // 只要html还有长度就继续循环
@@ -87,7 +87,7 @@ function parse(html) {
         if (textEnd === 0) {
 
             // 先使用解析开始标签的函数：parseStartTag进行解析
-            const startTagMatch = parseStartTag()
+            const startTagMatch = parseStartTag(html)
 
             // 如果解析有返回值，说明是开始标签
             if (startTagMatch) {
@@ -128,9 +128,9 @@ function parse(html) {
     }
 
     // 解析开始标签的函数
-    function parseStartTag() {
+    function parseStartTag(html) {
 
-        // 通过正则匹配开始标签
+        // 通过正则匹配开始标签开始
         const start = html.match(startTagOpen)
 
         let match

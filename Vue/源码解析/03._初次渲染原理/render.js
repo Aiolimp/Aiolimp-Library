@@ -1,4 +1,5 @@
-//（执行render函数，获得虚拟DOM）const { createElement, createTextNode } = require('./vdom/index')
+//（执行render函数，获得虚拟DOM）
+const { createElement, createTextNode } = require('./vdom/index')
 
 function renderMixin(Vue) {
     // 将_render函数挂在Vue原型上
