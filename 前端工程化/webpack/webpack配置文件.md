@@ -87,9 +87,9 @@ wepack给我们提供了三个选项，即`none`、`development`和`production`�
 
 三者的区别呢，在于`webpack`自带的代码压缩和优化插件使用。
 
-- **`none`**：不使用任何默认优化选项；
-- **`development`**：指的是开发环境，会默认开启一些有利于开发调试的选项，比如`NamedModulesPlugin`和`NamedChunksPlugin`，分别是给`module`和`chunk`命名的，而默认是一个数组，对应的`chunkName`也只是下标，不利于开发调试；
-- **`production`**：指的是生产环境，则会开启代码压缩和代码性能优化的插件，从而打包出来的文件也相对`none`和`development`小很多。
+- `none`：不使用任何默认优化选项；
+- `development`：指的是开发环境，会默认开启一些有利于开发调试的选项，比如`NamedModulesPlugin`和`NamedChunksPlugin`，分别是给`module`和`chunk`命名的，而默认是一个数组，对应的`chunkName`也只是下标，不利于开发调试；
+- `production`：指的是生产环境，则会开启代码压缩和代码性能优化的插件，从而打包出来的文件也相对`none`和`development`小很多。
 
 > 当我们设置mode之后，我们可以在`process.env.NODE_ENV`获取到当前的环境
 
@@ -140,10 +140,10 @@ module.exports = {
 
 当然，官方不止提供这么一个选项，具体的可以去[官网](https://link.juejin.cn?target=https%3A%2F%2Fwebpack.docschina.org%2Fconfiguration%2Fdevtool%2F%23devtool)看看，这里就说其他几个比较常用的选项。
 
-- **`none`**：不会生成`sourceMap`；
-- **`eval`**：每个模块都会使用`eval()`执行，不建议生成环境中使用；
-- **`cheap-source-map`**：生成`sourceMap`，但是没有列映射，则只会提醒是在代码的第几行，不会提示到第几列；
-- **`inline-source-map`**：会生成`sourceMap`，但不会生成`map`文件，而是将`sourceMap`放在打包文件中。
+- `none`：不会生成`sourceMap`；
+- `eval`**：每个模块都会使用`eval()`执行，不建议生成环境中使用；
+- `cheap-source-map`：生成`sourceMap`，但是没有列映射，则只会提醒是在代码的第几行，不会提示到第几列；
+- `inline-source-map`：会生成`sourceMap`，但不会生成`map`文件，而是将`sourceMap`放在打包文件中。
 
 ## module
 
