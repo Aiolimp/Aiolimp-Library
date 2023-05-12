@@ -111,7 +111,7 @@ module.exports = {
 `webpack`也给我们提供了另一种方式，就是在命令行中配置，也就是加上`--mode`：
 
 ```javascript
-// package.json
+//   package.json 
 "scripts": {
   "dev": "webpack --mode development",
   "build": "webpack --mode production"
