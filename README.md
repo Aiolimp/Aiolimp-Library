@@ -1,8 +1,8 @@
 # Aiolimp_Library
 
-记录下前端学习的笔记，收纳了平时学习过程中遇到的优秀文章，大部分也做了自己的理解，积累编程生涯的点点滴滴。
+记录下前端学习的笔记，收纳了平时学习过程中遇到的优秀文章，大部分也做了自己的理解，积累编程生涯的点点滴滴。。。
 ,
-|                              Ⅰ                               |                              Ⅱ                               |                              Ⅲ                               |                              Ⅳ                               |                              Ⅴ                               |                              Ⅵ                               |                              Ⅶ                               |
+| Ⅰ | Ⅱ | Ⅲ | Ⅳ | Ⅴ | Ⅵ | Ⅶ |
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
 | [CSS](https://github.com/Aiolimp/Aiolimp-Library/tree/main/CSS) | [JavaScript](https://github.com/Aiolimp/Aiolimp-Library/tree/main/JavaScript) | [HTML](https://github.com/Aiolimp/Aiolimp-Library/tree/main/HTML) | [Vue](https://github.com/Aiolimp/Aiolimp-Library/tree/main/Vue) | [计算机网络](https://github.com/Aiolimp/Aiolimp-Library/tree/main/%E6%B5%8F%E8%A7%88%E5%99%A8) | [设计模式](https://github.com/Aiolimp/Aiolimp-Library/tree/main/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F) | [面试](https://github.com/Aiolimp/Aiolimp-Library/tree/main/%E9%9D%A2%E8%AF%95%E8%B5%84%E6%96%99) |
 
@@ -23,7 +23,7 @@
 - 大前端开发者需要了解的基础编译原理和语言知识：[fullstack.blog/2017/06/24/…](https://link.juejin.cn?target=http%3A%2F%2Ffullstack.blog%2F2017%2F06%2F24%2F%E5%A4%A7%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%80%85%E9%9C%80%E8%A6%81%E4%BA%86%E8%A7%A3%E7%9A%84%E5%9F%BA%E7%A1%80%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86%E5%92%8C%E8%AF%AD%E8%A8%80%E7%9F%A5%E8%AF%86)
 - 图解`HTTP`：[book.douban.com/subject/258…](https://link.juejin.cn?target=https%3A%2F%2Fbook.douban.com%2Fsubject%2F25863515%2F)
 - [📚]`JavaScript`设计模式与开发实践：[book.douban.com/subject/263…](https://link.juejin.cn?target=https%3A%2F%2Fbook.douban.com%2Fsubject%2F26382780%2F)
-- 正则表达式30分钟入门教程：[link.juejin.im/?target=htt…](https://link.juejin.im/?target=https%3A%2F%2Fdeerchao.net%2Ftutorials%2Fregex%2Fregex.htm)
+- 正则表达式 30 分钟入门教程：[link.juejin.im/?target=htt…](https://link.juejin.im/?target=https%3A%2F%2Fdeerchao.net%2Ftutorials%2Fregex%2Fregex.htm)
 
 ### 数据结构和算法
 
@@ -60,7 +60,7 @@
 - 廖雪峰的`git`教程：[www.liaoxuefeng.com/wiki/001373…](https://link.juejin.cn?target=https%3A%2F%2Fwww.liaoxuefeng.com%2Fwiki%2F0013739516305929606dd18361248578c67b8067c8c017b000)
 - 图解`Git`：[marklodato.github.io/visual-git-…](https://link.juejin.cn?target=https%3A%2F%2Fmarklodato.github.io%2Fvisual-git-guide%2Findex-zh-cn.html)
 - 前端开发者必备的`Nginx`知识：[juejin.cn/post/684490…](https://juejin.cn/post/6844903793918738440)
-- 使用Jenkins进行持续集成：[www.liaoxuefeng.com/article/001…](https://link.juejin.cn?target=https%3A%2F%2Fwww.liaoxuefeng.com%2Farticle%2F001463233913442cdb2d1bd1b1b42e3b0b29eb1ba736c5e000)
+- 使用 Jenkins 进行持续集成：[www.liaoxuefeng.com/article/001…](https://link.juejin.cn?target=https%3A%2F%2Fwww.liaoxuefeng.com%2Farticle%2F001463233913442cdb2d1bd1b1b42e3b0b29eb1ba736c5e000)
 
 ### 项目和业务
 
@@ -76,11 +76,9 @@
 - 如何在工作内外获得持续的技术成长：[juejin.cn/post/684490…](https://juejin.cn/post/6844903828333002760)
 - 优秀的前端博客汇总：[github.com/foru17/fron…](https://link.juejin.cn?target=https%3A%2F%2Fgithub.com%2Fforu17%2Ffront-end-collect)
 
- 推荐博客： 
+推荐博客：
 
 - 冴羽的博客：[github.com/mqyqingfeng…](https://link.juejin.cn?target=https%3A%2F%2Fgithub.com%2Fmqyqingfeng%2FBlog)
 - 张鑫旭的博客：[www.zhangxinxu.com/wordpress/](https://link.juejin.cn?target=https%3A%2F%2Fwww.zhangxinxu.com%2Fwordpress%2F)
 - 左耳朵耗子：[coolshell.cn/](https://link.juejin.cn?target=https%3A%2F%2Fcoolshell.cn%2F)
 - 神三元：[http://47.98.159.95/my_blog/](http://47.98.159.95/my_blog/)
-
-
