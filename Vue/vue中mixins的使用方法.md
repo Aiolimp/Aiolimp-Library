@@ -20,7 +20,7 @@ export default {
   },
   methods: {
     hello() {
-      console.log('hello for mixin');
+      console.log('hello for  mixin');
     },
   },
 };
