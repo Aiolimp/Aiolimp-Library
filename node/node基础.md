@@ -1987,3 +1987,204 @@ location /images/ {
     }
 }
 ```
+
+## 22.定时任务
+
+### 什么是定时任务？
+
+定时任务是指在预定的时间点或时间间隔内执行的任务或操作。它们是自动化执行特定逻辑的一种方式，可用于执行重复性的、周期性的或计划性的任务。
+
+定时任务通常用于以下情况：
+
+1. 执行后台任务：定时任务可用于自动执行后台任务，如数据备份、日志清理、缓存刷新等。通过设定适当的时间点或时间间隔，可以确保这些任务按计划进行，而无需手动干预。
+2. 执行定期操作：定时任务可用于执行定期操作，如发送电子邮件提醒、生成报告、更新数据等。通过设定适当的时间点，可以自动触发这些操作，提高效率并减少人工操作的需求。
+3. 调度任务和工作流：定时任务可以用于调度和协调复杂的任务和工作流程。通过设置任务之间的依赖关系和执
+
+### 安装依赖
+
+```sh
+npm install node-schedule
+```
+
+[node-schedule 文档](https://link.juejin.cn?target=https%3A%2F%2Fwww.npmjs.com%2Fpackage%2Fnode-schedule)
+
+> 一般定时任务都是用`cron`表达式去表示时间的
+
+### cron 表达式
+
+Cron 表达式是一种用于指定定时任务执行时间的字符串表示形式。它由 6 个或 7 个字段组成，每个字段表示任务执行的时间单位和范围。
+
+Cron 表达式的典型格式如下：
+
+```markdown
+markdown
+
+代码解读
+复制代码\* \* \* \* \* \*
+┬ ┬ ┬ ┬ ┬ ┬
+│ │ │ │ │ │
+│ │ │ │ │ └── 星期（0 - 6，0 表示星期日）
+│ │ │ │ └───── 月份（1 - 12）
+│ │ │ └────────── 日（1 - 31）
+│ │ └─────────────── 小时（0 - 23）
+│ └──────────────────── 分钟（0 - 59）
+└───────────────────────── 秒（0 - 59）
+```
+
+| 域              | 是否必需 | 取值范围                                                               | 特殊字符       |
+| --------------- | -------- | ---------------------------------------------------------------------- | -------------- |
+| 秒 Seconds      | 是       | [0, 59]                                                                | \* , - /       |
+| 分钟 Minutes    | 是       | [0, 59]                                                                | \* , - /       |
+| 小时 Hours      | 是       | [0, 23]                                                                | \* , - /       |
+| 日期 DayofMonth | 是       | [1, 31]                                                                | \* , - / ? L W |
+| 月份 Month      | 是       | [1, 12]或[JAN, DEC]                                                    | \* , - /       |
+| 星期 DayofWeek  | 是       | [1, 7]或[MON, SUN]。若使用[1, 7]表达方式，1 代表星期一，7 代表星期日。 | \* , - / ? L # |
+| 年 Year         | 否       | 1970+                                                                  | - \* /         |
+
+每个字段可以接受特定的数值、范围、通配符和特殊字符来指定任务的执行时间：
+
+- 数值：表示具体的时间单位，如 1、2、10 等。
+- 范围：使用`-`连接起始和结束的数值，表示一个范围内的所有值，如 1-5 表示 1 到 5 的所有数值。
+- 通配符：使用`*`表示匹配该字段的所有可能值，如`*`表示每分钟、每小时、每天等。
+- 逗号分隔：使用逗号分隔多个数值或范围，表示匹配其中任意一个值，如 1,3 表示 1 或 3。
+- 步长：使用`/`表示步长，用于指定间隔的数值，如`*/5`表示每隔 5 个单位执行一次。
+- 特殊字符：Cron 表达式还支持一些特殊字符来表示特定的含义，如`?`用于替代日和星期字段中的任意值，`L`表示最后一天，`W`表示最近的工作日等。
+
+以下是一些常见的 Cron 表达式示例：
+
+- `* * * * * *`：每秒执行一次任务。
+- `0 * * * * *`：每分钟的整点执行一次任务。
+- `0 0 * * * *`：每小时的整点执行一次任务。
+- `0 0 * * 1 *`：每周一的午夜执行一次任务。
+- `0 0 1 * * *`：每月的 1 号午夜执行一次任务。
+- `0 0 1 1 * *`：每年的 1 月 1 日午夜执行一次任务。
+
+### 基本用法
+
+**1. 使用 Cron 风格语法**
+
+```js
+const schedule = require('node-schedule');
+
+// 每分钟的第30秒执行
+const job = schedule.scheduleJob('30 * * * * *', function () {
+  console.log('任务执行于:', new Date());
+});
+
+// 取消任务
+// job.cancel();
+```
+
+**2. 使用 Date 对象**
+
+```js
+const schedule = require('node-schedule');
+const date = new Date(2023, 10, 15, 14, 30, 0); // 2023年11月15日14:30:00
+
+const job = schedule.scheduleJob(date, function () {
+  console.log('任务在指定时间执行:', new Date());
+});
+```
+
+**3. 使用 RecurrenceRule**
+
+```js
+const schedule = require('node-schedule');
+
+const rule = new schedule.RecurrenceRule();
+rule.hour = 14; // 每天14点
+rule.minute = 30; // 30分
+rule.dayOfWeek = [0, new schedule.Range(1, 5)]; // 周日和周一至周五
+
+const job = schedule.scheduleJob(rule, function () {
+  console.log('定时任务执行于:', new Date());
+});
+```
+
+### 高级功能
+
+**1. 取消任务**
+
+```js
+// 取消单个任务
+job.cancel();
+
+// 取消所有任务
+schedule.gracefulShutdown().then(() => {
+  console.log('所有定时任务已取消');
+});
+```
+
+**2. 查看所有任务**
+
+```js
+const jobs = schedule.scheduledJobs;
+console.log('当前所有定时任务:', Object.keys(jobs));
+```
+
+**3. 任务执行统计**
+
+```js
+const job = schedule.scheduleJob('*/5 * * * *', function () {
+  console.log('每5分钟执行一次');
+});
+
+console.log('下次执行时间:', job.nextInvocation());
+```
+
+### 实际应用示例
+
+**1. 数据库备份任务**
+
+```js
+const schedule = require('node-schedule');
+const backup = require('./backup'); // 假设的备份模块
+
+// 每天凌晨3点执行备份
+schedule.scheduleJob('0 0 3 * * *', function () {
+  console.log('开始数据库备份:', new Date());
+  backup.run();
+});
+```
+
+**2. 定时发送邮件**
+
+```js
+const schedule = require('node-schedule');
+const mailer = require('./mailer'); // 假设的邮件模块
+
+// 每周一上午9点发送周报
+schedule.scheduleJob('0 0 9 * * 1', function () {
+  console.log('发送周报邮件:', new Date());
+  mailer.sendWeeklyReport();
+});
+```
+
+**3. 定时清理临时文件**
+
+```js
+const schedule = require('node-schedule');
+const fs = require('fs');
+const path = require('path');
+
+// 每小时清理一次临时文件夹
+schedule.scheduleJob('0 0 * * * *', function () {
+  const tempDir = path.join(__dirname, 'temp');
+  fs.readdir(tempDir, (err, files) => {
+    if (err) throw err;
+
+    files.forEach((file) => {
+      fs.unlink(path.join(tempDir, file), (err) => {
+        if (err) console.error(err);
+      });
+    });
+  });
+});
+```
+
+**注意事项**
+
+1. Node-Schedule 不适合高精度定时任务（毫秒级）
+2. 长时间运行的任务可能会影响后续任务的执行时间
+3. 在集群环境中，需要确保任务不会在多个进程重复执行
+4. 服务器重启后，所有任务需要重新设置
