@@ -2,7 +2,7 @@
 
 在早期的网络传输中，也就存在`TCP`协议需要“握手”的过程，但早期的协议有一个缺陷：通信只能由客户端发起，做不到服务器主动向客户端推送信息。 ![img](https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/4/19/1718e16feeb3bc07~tplv-t2oaga2asx-watermark.awebp)
 
-于是`WebSocket` 协议在2008年诞生，2011年成为国际标准。所有浏览器都已经支持了。
+于是`WebSocket` 协议在 2008 年诞生，2011 年成为国际标准。所有浏览器都已经支持了。
 
 而随着`SSL/TLS`的完善，存在已久的安全版网络协议：`HTTPS`也是迸发式发展。
 
@@ -22,15 +22,13 @@
 
 直到我看到《网络是怎样连接的》中的一段话：
 
-> **在实际的通信中，序号并不是从 1 开始的，而是需要用随机数计算出一个初始值，这是因为
+> \*\*在实际的通信中，序号并不是从 1 开始的，而是需要用随机数计算出一个初始值，这是因为
 
-如果序号都从 1 开始，通信过程就会非常容易预测，有人会利用这一点来发动攻击。**
+如果序号都从 1 开始，通信过程就会非常容易预测，有人会利用这一点来发动攻击。\*\*
 
+> \*\*但是如果初始值是随机的，那么对方就搞不清楚序号到底是从
 
-
-> **但是如果初始值是随机的，那么对方就搞不清楚序号到底是从
-
-多少开始计算的，因此需要在开始收发数据之前将初始值告知通信对象。**
+多少开始计算的，因此需要在开始收发数据之前将初始值告知通信对象。\*\*
 
 ![img](https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/4/19/17191f9707864302~tplv-t2oaga2asx-watermark.awebp) 你品，你细品。三次握手不就是相互试探暗号，来确定是不是对的人吗？
 
@@ -83,37 +81,37 @@
 
 ### 3.2 `TLS`握手详解
 
-**TLS握手何时发生？：**
+**TLS 握手何时发生？：**
 
 1. 每当用户通过`HTTPS`导航到网站并且浏览器首先开始查询网站的原始服务器时，就会进行`TLS`握手。
-2. 每当其他任何通信使用`HTTPS`（包括`API`调用和`HTTPS`查询上的DNS）时，也会发生`TLS`握手。
-3. 通过TCP握手打开TCP连接后，会发生`TLS` 握手。
+2. 每当其他任何通信使用`HTTPS`（包括`API`调用和`HTTPS`查询上的 DNS）时，也会发生`TLS`握手。
+3. 通过 TCP 握手打开 TCP 连接后，会发生`TLS` 握手。
 
- **TLS握手期间会发生什么？**
+**TLS 握手期间会发生什么？**
 
 在`TLS`握手过程中，客户端和服务器将共同执行以下操作：
 
-- 指定将使用的TLS版本（TLS 1.0、1.2、1.3等）
+- 指定将使用的 TLS 版本（TLS 1.0、1.2、1.3 等）
 - 确定将使用哪些加密套件。
-- 通过服务器的公钥和SSL证书颁发机构的数字签名来验证服务器的身份
+- 通过服务器的公钥和 SSL 证书颁发机构的数字签名来验证服务器的身份
 - 握手完成后，生成会话密钥以使用对称加密
 
 **加密套件决定握手方式：**：
 
-> [摘自：《HTTPS篇之SSL握手过程详解》](https://link.juejin.cn?target=https%3A%2F%2Frazeencheng.com%2Fpost%2Fssl-handshake-detail)
+> [摘自：《HTTPS 篇之 SSL 握手过程详解》](https://link.juejin.cn?target=https%3A%2F%2Frazeencheng.com%2Fpost%2Fssl-handshake-detail)
 
 在`TLS`中有两种主要的握手类型：一种基于`RSA`，一种基于`Diffie-Hellman`。 这两种握手类型的主要区别在于主秘钥交换和认证上。
 
-|         | 秘钥交换 | 身份验证 |
-| ------- | -------- | -------- |
-| RSA握手 | RSA      | RSA      |
-| DH握手  | DH       | RSA/DSA  |
+|          | 秘钥交换 | 身份验证 |
+| -------- | -------- | -------- |
+| RSA 握手 | RSA      | RSA      |
+| DH 握手  | DH       | RSA/DSA  |
 
 主流的握手类型，基本都是基于`RSA`，所以以下讲解都基于` RSA`版握手。
 
 整个流程如下图所示： ![img](https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/4/19/171914a65c74d7b8~tplv-t2oaga2asx-watermark.awebp) 具体流程描述：
 
-1. 客户端`hello`：客户端通过向服务器发送“问候”消息来发起握手。该消息将包括客户端支持的TLS版本，支持的加密套件以及称为“客户端随机”的随机字节字符串。
+1. 客户端`hello`：客户端通过向服务器发送“问候”消息来发起握手。该消息将包括客户端支持的 TLS 版本，支持的加密套件以及称为“客户端随机”的随机字节字符串。
 2. 服务器`hello`：为回复客户端`hello`消息，服务器发送一条消息，其中包含服务器的`SSL`证书，服务器选择的加密套件和“服务器随机数”，即服务器生成的另一个随机字节串。
 3. 客户端发送公钥加密的预主密钥。
 4. 服务器用自己的私钥解密加密的预主密钥。
@@ -125,7 +123,7 @@
 
 ![img](https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/4/19/17191b816c90c262~tplv-t2oaga2asx-watermark.awebp)
 
-`WebSocket`协议实现起来相对简单。它使用`HTTP`协议进行初始握手。成功握手之后，就建立了连接，`WebSocket`基本上使用原始TCP读取/写入数据。
+`WebSocket`协议实现起来相对简单。它使用`HTTP`协议进行初始握手。成功握手之后，就建立了连接，`WebSocket`基本上使用原始 TCP 读取/写入数据。
 
 《图解`HTTP`》一书中的图讲的比较清楚：
 
@@ -136,24 +134,24 @@
 1. 客户端请求：
 
 ```
-  GET /chat HTTP/1.1     
-Host: server.example.com     
-Upgrade: websocket     
-Connection: Upgrade     
-Sec-WebSocket-Key: x3JJHMbDL1EzLkh9GBhXDw==     
-Sec-WebSocket-Protocol: chat, superchat     
-Sec-WebSocket-Version: 13     
+  GET /chat HTTP/1.1
+Host: server.example.com
+Upgrade: websocket
+Connection: Upgrade
+Sec-WebSocket-Key: x3JJHMbDL1EzLkh9GBhXDw==
+Sec-WebSocket-Protocol: chat, superchat
+Sec-WebSocket-Version: 13
 Origin: http://example.com
 ```
 
 1. 服务端响应：
 
 ```
-    HTTP/1.1 101 
-Switching Protocols     
-Upgrade: websocket     
-Connection: Upgrade     
-Sec-WebSocket-Accept: HSmrc0sMlYUkAGmm5OPpG2HaGWk=     
+    HTTP/1.1 101
+Switching Protocols
+Upgrade: websocket
+Connection: Upgrade
+Sec-WebSocket-Accept: HSmrc0sMlYUkAGmm5OPpG2HaGWk=
 Sec-WebSocket-Protocol: chat
 ```
 
@@ -207,8 +205,8 @@ Sec-WebSocket-Protocol: chat
 实际上，`Socket.io`有很多传输机制:
 
 ```
-1. WebSockets 
-2. FlashSocket 
+1. WebSockets
+2. FlashSocket
 3. XHR长轮询
 4. XHR部分流：multipart/form-data
 5. XHR轮询
@@ -229,12 +227,11 @@ Sec-WebSocket-Protocol: chat
 
 具体区别：
 
-1. `HTTPS`协议需要到`CA`申请证书，一般免费证书很少，需要交费。
-2. `HTTP`是超文本传输协议，信息是明文传输，`HTTPS` 则是具有安全性的ssl加密传输协议。
+1. `HTTPS` 协议需要到`CA`申请证书，一般免费证书很少，需要交费。
+2. `HTTP`是超文本传输协议，信息是明文传输，`HTTPS` 则是具有安全性的 ssl 加密传输协议。
 3. `HTTP`和`https`使用的是完全不同的连接方式，用的端口也不一样,前者是`80`,后者是`443`。
 4. `HTTP`的连接很简单,是无状态的。`HTTPS`协议是由`SSL+HTTP`协议构建的可进行加密传输、身份认证的网络协议，比`HTTP`协议安全。
 
 ## 参考
 
 [面试官问到三次握手，我甩出这张脑图，他服了！](https://juejin.cn/post/6844904132071948295#heading-2)
-
